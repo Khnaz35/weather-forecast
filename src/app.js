@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-// import Routes from './routes';
+import Weather from './components/weather';
 
 const App = () => {
     return (
-      // <Routes />
-      <h1>HELLO THEREEEEE</h1>
-    )
+      <div>
+        <h1>HELLO THEREEEEE</h1>
+        <Weather />
+      </div>
+    );
 };
 
 export default App;
