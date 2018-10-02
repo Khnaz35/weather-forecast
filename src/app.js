@@ -3,7 +3,7 @@ import SearchLocation from './components/search-location';
 
 const App = () => {
     return (
-      <div>
+      <div id='app'>
         <h1>5-Day Weather Forecast</h1>
         <SearchLocation />
       </div>

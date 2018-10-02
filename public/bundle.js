@@ -32362,7 +32362,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "5-Day Weather Forecast"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_search_location__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "app"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "5-Day Weather Forecast"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_search_location__WEBPACK_IMPORTED_MODULE_1__["default"], null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -32385,10 +32387,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ForecastTableItem = function ForecastTableItem(props) {
-  var date = props.date;
-  var high = props.high;
-  var low = props.low;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, date), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Sunny"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, high, " / ", low), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "40%"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "SSW 10MPH"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "20%"));
+  var date = props.date,
+      high = props.high,
+      low = props.low,
+      description = props.description,
+      wind = props.wind,
+      humidity = props.humidity,
+      scale = props.scale;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, date), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, high, "\xB0 / ", low, "\xB0"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, wind, " ", scale === 'metric' ? 'KM/H' : 'MPH'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, humidity, "%"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ForecastTableItem);
@@ -32455,15 +32461,22 @@ function (_Component) {
   _createClass(Forecast, [{
     key: "render",
     value: function render() {
-      var cityForecast = this.props.forecast;
-      var currentTemp = cityForecast.length ? cityForecast[0].main.temp : null;
-      var forecastByDay = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["aggregateForecast"])(cityForecast);
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, forecastByDay.length ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Current Temperature: ", currentTemp), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Day"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "High / Low"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Precipitation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Wind"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Humidity")), forecastByDay.map(function (forecast) {
+      var _this$props = this.props,
+          cityInfo = _this$props.cityInfo,
+          forecast = _this$props.forecast,
+          scale = _this$props.scale;
+      var currentTemp = forecast.length ? forecast[0].main.temp : null;
+      var forecastByDay = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["aggregateForecast"])(forecast);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, forecastByDay.length ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, cityInfo.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Current temperature: ", forecast[0].main.temp, "\xB0 ", scale === 'metric' ? 'celcius' : 'farenheit'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Day"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "High / Low"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Wind"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Humidity")), forecastByDay.map(function (forecast) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast_table_item__WEBPACK_IMPORTED_MODULE_3__["default"], {
           key: forecast.date,
           date: forecast.date,
           high: forecast.high,
-          low: forecast.low
+          low: forecast.low,
+          description: forecast.description,
+          wind: forecast.wind,
+          humidity: forecast.humidity,
+          scale: scale
         });
       })))) : null);
     }
@@ -32510,7 +32523,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
- // import ForecastTable from './forecast-table';
 
 
 
@@ -32526,8 +32538,9 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(SearchLocation).call(this, props));
     _this.state = {
-      city: '',
+      cityInfo: {},
       forecast: [],
+      scale: '',
       loading: false,
       error: false
     };
@@ -32544,14 +32557,17 @@ function (_Component) {
       this.setState({
         loading: true
       });
-      var api_key = "`af80bfbd91752fc16e6517fe9698d31a`";
+      var scale = event.target.scale.value === 'celcius' ? 'metric' : 'imperial';
+      var api_key = "`af80bfbd91752fc16e6517fe9698d31a`".slice(1, -1);
       var city = event.target.search.value;
       event.target.reset();
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("https://api.openweathermap.org/data/2.5/forecast?q=".concat(city, "&type=accurate&units=imperial&APPID=af80bfbd91752fc16e6517fe9698d31a")).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("https://api.openweathermap.org/data/2.5/forecast?q=".concat(city, "&type=accurate&units=").concat(scale, "&APPID=").concat(api_key)).then(function (res) {
         console.log(res.data);
 
         _this2.setState({
+          cityInfo: res.data.city,
           forecast: res.data.list,
+          scale: scale,
           loading: false,
           error: false
         });
@@ -32571,10 +32587,18 @@ function (_Component) {
         type: "text",
         placeholder: "Search by city name...",
         name: "search"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        name: "scale"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "farenheit"
+      }, "Farenheit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "celcius"
+      }, "Celcius")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
       }, "Submit")), this.state.error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Error: please make sure city exists") : null, this.state.loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Loading...") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        forecast: this.state.forecast
+        cityInfo: this.state.cityInfo,
+        forecast: this.state.forecast,
+        scale: this.state.scale
       }));
     }
   }]);
@@ -32620,23 +32644,29 @@ function aggregateForecast(cityForecast) {
   var currentDate;
 
   for (var i = 0; i < cityForecast.length; i++) {
-    currentDate = cityForecast[i].dt_txt.slice(0, 10);
+    var currentElement = cityForecast[i];
+    var currentElementMain = cityForecast[i].main;
+    currentDate = currentElement.dt_txt.slice(0, 10);
 
     if (i > 0) {
+      currentElement.wind.speed;
       prevDate = cityForecast[i - 1].dt_txt.slice(0, 10);
     }
 
     if (i === 0 || currentDate !== prevDate) {
-      var date = {
-        date: currentDate
+      var forecast = {
+        date: currentDate,
+        description: currentElement.weather[0].description,
+        wind: currentElement.wind.speed,
+        humidity: currentElementMain.humidity
       };
-      aggregatedbyDay.push(date);
+      aggregatedbyDay.push(forecast);
     }
 
-    var currentElement = aggregatedbyDay[aggregatedbyDay.length - 1];
-    var currentTemp = cityForecast[i].main.temp;
-    currentElement.high = currentElement.high ? Math.max(currentElement.high, currentTemp) : currentTemp;
-    currentElement.low = currentElement.low ? Math.min(currentElement.low, currentTemp) : currentTemp;
+    var aggregatedElement = aggregatedbyDay[aggregatedbyDay.length - 1];
+    var currentTemp = currentElementMain.temp;
+    aggregatedElement.high = aggregatedElement.high ? Math.max(aggregatedElement.high, currentTemp) : currentTemp;
+    aggregatedElement.low = aggregatedElement.low ? Math.min(aggregatedElement.low, currentTemp) : currentTemp;
   }
 
   return aggregatedbyDay;

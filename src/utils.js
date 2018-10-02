@@ -3,18 +3,25 @@ function aggregateForecast (cityForecast) {
   let prevDate;
   let currentDate;
   for(let i = 0; i < cityForecast.length; i++) {
-    currentDate = cityForecast[i].dt_txt.slice(0, 10);
-    if(i > 0) {
+    const currentElement = cityForecast[i];
+    const currentElementMain = cityForecast[i].main;
+    currentDate = currentElement.dt_txt.slice(0, 10);
+    if(i > 0) {currentElement.wind.speed
         prevDate = cityForecast[i-1].dt_txt.slice(0, 10);
       }
     if(i === 0 || currentDate !== prevDate) {
-      const date = {date: currentDate}
-      aggregatedbyDay.push(date)
+      const forecast = {
+        date: currentDate,
+        description: currentElement.weather[0].description,
+        wind: currentElement.wind.speed,
+        humidity: currentElementMain.humidity
+      }
+      aggregatedbyDay.push(forecast)
     }
-    let currentElement = aggregatedbyDay[aggregatedbyDay.length-1];
-    const currentTemp = cityForecast[i].main.temp;
-    currentElement.high = currentElement.high ? Math.max(currentElement.high, currentTemp) : currentTemp;
-    currentElement.low = currentElement.low ? Math.min(currentElement.low, currentTemp) : currentTemp;
+    let aggregatedElement = aggregatedbyDay[aggregatedbyDay.length-1];
+    const currentTemp = currentElementMain.temp;
+    aggregatedElement.high = aggregatedElement.high ? Math.max(aggregatedElement.high, currentTemp) : currentTemp;
+    aggregatedElement.low = aggregatedElement.low ? Math.min(aggregatedElement.low, currentTemp) : currentTemp;
   }
   return aggregatedbyDay;
 }

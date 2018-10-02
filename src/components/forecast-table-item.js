@@ -2,17 +2,14 @@ import React, { Component } from 'react';
 import Forecast from './forecast';
 
 const ForecastTableItem = (props) => {
-  const date = props.date;
-  const high = props.high;
-  const low = props.low;
+  const { date, high, low, description, wind, humidity, unit } = props;
   return (
     <tr>
       <td>{date}</td>
-      <td>Sunny</td>
-      <td>{high} / {low}</td>
-      <td>40%</td>
-      <td>SSW 10MPH</td>
-      <td>20%</td>
+      <td>{description}</td>
+      <td>{high}&#176; / {low}&#176;</td>
+      <td>{wind} {unit === 'metric' ? 'KM/H' : 'MPH'}</td>
+      <td>{humidity}%</td>
     </tr>
   )
 }

@@ -13,23 +13,23 @@ export default class Forecast extends Component {
 
 
   render() {
-    const cityForecast = this.props.forecast;
-    const currentTemp = cityForecast.length ? cityForecast[0].main.temp : null;
-    const forecastByDay = aggregateForecast(cityForecast);
+    const { cityInfo, forecast, unit } = this.props;
+    const currentTemp = forecast.length ? forecast[0].main.temp : null;
+    const forecastByDay = aggregateForecast(forecast);
 
     return(
       <div>
         {
           forecastByDay.length ?
           <div>
-            <h3>Current Temperature: {currentTemp}</h3>
+            <h2>{cityInfo.name}</h2>
+            <h3>Current temperature: {forecast[0].main.temp}&#176; {unit === 'metric' ? 'celcius' : 'farenheit'}</h3>
             <table>
               <thead>
                 <tr>
                   <th>Day</th>
                   <th>Description</th>
                   <th>High / Low</th>
-                  <th>Precipitation</th>
                   <th>Wind</th>
                   <th>Humidity</th>
                 </tr>
@@ -41,6 +41,10 @@ export default class Forecast extends Component {
                         date={forecast.date}
                         high={forecast.high}
                         low={forecast.low}
+                        description={forecast.description}
+                        wind={forecast.wind}
+                        humidity={forecast.humidity}
+                        unit={unit}
                       />
                     )
                   })
