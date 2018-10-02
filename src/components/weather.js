@@ -5,20 +5,37 @@ export default class Weather extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      weather: 'no data'
+      forecast: []
     };
   }
 
   componentDidMount() {
-    const api_key = process.env.OPEN_WEATHER_MAP_API_KEY.slice(0, -2);
+    const api_key = process.env.OPEN_WEATHER_MAP_API_KEY.slice(0, -1);
 
-    axios.get(`https://api.openweathermap.org/data/2.5/forecast?id=3582383&units=imperial&&APPID=${api_key}`)
-    .then(res => console.log('RESPONSE HERE!!!', res))
+    // axios.get(`https://api.openweathermap.org/data/2.5/forecast?id=3582383&units=imperial&APPID=${api_key}`)
+    // .then(res => {
+    //   console.log(res.data)
+    //   this.setState({forecast: res.data.list});
+    // })
+    // .catch(error => console.log(error))
   }
 
   render() {
+    const forecastList = this.state.forecast;
     return(
-      <h3>{this.state.weather}</h3>
-    );
+      <div>
+        {
+          forecastList.length ?
+          forecastList.map(forecast => {
+            return (
+              <div key={forecast.dt}>
+                <p>{forecast.main.temp}</p>
+              </div>
+            )
+          })
+          : null
+        }
+      </div>
+    )
   }
 }
