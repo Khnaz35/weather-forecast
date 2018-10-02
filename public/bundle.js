@@ -32357,17 +32357,91 @@ module.exports = g;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_weather__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/weather */ "./src/components/weather.js");
-/* harmony import */ var _components_search_location__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/search-location */ "./src/components/search-location.js");
-
+/* harmony import */ var _components_search_location__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/search-location */ "./src/components/search-location.js");
 
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "5-Day Weather Forecast"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_search_location__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_weather__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "5-Day Weather Forecast"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_search_location__WEBPACK_IMPORTED_MODULE_1__["default"], null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
+
+/***/ }),
+
+/***/ "./src/components/forecast.js":
+/*!************************************!*\
+  !*** ./src/components/forecast.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Forecast; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils */ "./src/utils.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils__WEBPACK_IMPORTED_MODULE_2__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var Forecast =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Forecast, _Component);
+
+  function Forecast(props) {
+    var _this;
+
+    _classCallCheck(this, Forecast);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Forecast).call(this, props));
+    _this.state = {
+      forecast: []
+    };
+    return _this;
+  }
+
+  _createClass(Forecast, [{
+    key: "render",
+    value: function render() {
+      var cityForecast = this.props.forecast;
+      var currentTemp = cityForecast.length ? cityForecast[0].main.temp : null;
+      var forecastByDay = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["aggregateForecast"])(cityForecast);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Current Temperature: ", currentTemp), forecastByDay.length ? forecastByDay.map(function (forecast, idx) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: idx
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Date: ", forecast.date), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "High: ", forecast.high), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Low: ", forecast.low));
+      }) : null);
+    }
+  }]);
+
+  return Forecast;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
 
 /***/ }),
 
@@ -32383,6 +32457,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SearchLocation; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _forecast__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./forecast */ "./src/components/forecast.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32400,6 +32477,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+
 
 
 
@@ -32415,7 +32494,8 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(SearchLocation).call(this, props));
     _this.state = {
-      city: ''
+      city: '',
+      forecast: []
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
@@ -32424,9 +32504,21 @@ function (_Component) {
   _createClass(SearchLocation, [{
     key: "handleSubmit",
     value: function handleSubmit(event) {
+      var _this2 = this;
+
       event.preventDefault();
-      this.setState({
-        city: event.target.search.value
+      var api_key = "`af80bfbd91752fc16e6517fe9698d31a`";
+      var city = event.target.search.value;
+      event.target.reset();
+      var countryCode = 'us';
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("https://api.openweathermap.org/data/2.5/forecast?q=".concat(city, "&type=accurate&units=imperial&APPID=af80bfbd91752fc16e6517fe9698d31a")).then(function (res) {
+        console.log(res.data);
+
+        _this2.setState({
+          forecast: res.data.list
+        });
+      }).catch(function (error) {
+        return console.log(error);
       });
     }
   }, {
@@ -32440,92 +32532,13 @@ function (_Component) {
         name: "search"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
-      }, "Submit")));
+      }, "Submit")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        forecast: this.state.forecast
+      }));
     }
   }]);
 
   return SearchLocation;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
-
-
-
-/***/ }),
-
-/***/ "./src/components/weather.js":
-/*!***********************************!*\
-  !*** ./src/components/weather.js ***!
-  \***********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Weather; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-var Weather =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(Weather, _Component);
-
-  function Weather(props) {
-    var _this;
-
-    _classCallCheck(this, Weather);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Weather).call(this, props));
-    _this.state = {
-      forecast: []
-    };
-    return _this;
-  }
-
-  _createClass(Weather, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var api_key = "af80bfbd91752fc16e6517fe9698d31a;".slice(0, -1); // axios.get(`https://api.openweathermap.org/data/2.5/forecast?id=3582383&units=imperial&APPID=${api_key}`)
-      // .then(res => {
-      //   console.log(res.data)
-      //   this.setState({forecast: res.data.list});
-      // })
-      // .catch(error => console.log(error))
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var forecastList = this.state.forecast;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, forecastList.length ? forecastList.map(function (forecast) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: forecast.dt
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, forecast.main.temp));
-      }) : null);
-    }
-  }]);
-
-  return Weather;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
@@ -32550,6 +32563,47 @@ __webpack_require__.r(__webpack_exports__);
 
 
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_app__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById('app'));
+
+/***/ }),
+
+/***/ "./src/utils.js":
+/*!**********************!*\
+  !*** ./src/utils.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function aggregateForecast(cityForecast) {
+  var aggregatedbyDay = [];
+  var prevDate;
+  var currentDate;
+
+  for (var i = 0; i < cityForecast.length; i++) {
+    currentDate = cityForecast[i].dt_txt.slice(0, 10);
+
+    if (i > 0) {
+      prevDate = cityForecast[i - 1].dt_txt.slice(0, 10);
+    }
+
+    if (i === 0 || currentDate !== prevDate) {
+      var date = {
+        date: currentDate
+      };
+      aggregatedbyDay.push(date);
+    }
+
+    var currentElement = aggregatedbyDay[aggregatedbyDay.length - 1];
+    var currentTemp = cityForecast[i].main.temp;
+    currentElement.high = currentElement.high ? Math.max(currentElement.high, currentTemp) : currentTemp;
+    currentElement.low = currentElement.low ? Math.min(currentElement.low, currentTemp) : currentTemp;
+  }
+
+  return aggregatedbyDay;
+}
+
+module.exports = {
+  aggregateForecast: aggregateForecast
+};
 
 /***/ }),
 
