@@ -32369,6 +32369,32 @@ var App = function App() {
 
 /***/ }),
 
+/***/ "./src/components/forecast-table-item.js":
+/*!***********************************************!*\
+  !*** ./src/components/forecast-table-item.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _forecast__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./forecast */ "./src/components/forecast.js");
+
+
+
+var ForecastTableItem = function ForecastTableItem(props) {
+  var date = props.date;
+  var high = props.high;
+  var low = props.low;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, date), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Sunny"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, high, " / ", low), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "40%"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "SSW 10MPH"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "20%"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ForecastTableItem);
+
+/***/ }),
+
 /***/ "./src/components/forecast.js":
 /*!************************************!*\
   !*** ./src/components/forecast.js ***!
@@ -32385,6 +32411,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils */ "./src/utils.js");
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _forecast_table_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./forecast-table-item */ "./src/components/forecast-table-item.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32402,6 +32429,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -32430,11 +32458,14 @@ function (_Component) {
       var cityForecast = this.props.forecast;
       var currentTemp = cityForecast.length ? cityForecast[0].main.temp : null;
       var forecastByDay = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["aggregateForecast"])(cityForecast);
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Current Temperature: ", currentTemp), forecastByDay.length ? forecastByDay.map(function (forecast, idx) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: idx
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Date: ", forecast.date), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "High: ", forecast.high), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Low: ", forecast.low));
-      }) : null);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, forecastByDay.length ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Current Temperature: ", currentTemp), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Day"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "High / Low"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Precipitation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Wind"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Humidity")), forecastByDay.map(function (forecast) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast_table_item__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          key: forecast.date,
+          date: forecast.date,
+          high: forecast.high,
+          low: forecast.low
+        });
+      })))) : null);
     }
   }]);
 
@@ -32479,6 +32510,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
+ // import ForecastTable from './forecast-table';
 
 
 
@@ -32495,7 +32527,9 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(SearchLocation).call(this, props));
     _this.state = {
       city: '',
-      forecast: []
+      forecast: [],
+      loading: false,
+      error: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
@@ -32507,18 +32541,25 @@ function (_Component) {
       var _this2 = this;
 
       event.preventDefault();
+      this.setState({
+        loading: true
+      });
       var api_key = "`af80bfbd91752fc16e6517fe9698d31a`";
       var city = event.target.search.value;
       event.target.reset();
-      var countryCode = 'us';
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("https://api.openweathermap.org/data/2.5/forecast?q=".concat(city, "&type=accurate&units=imperial&APPID=af80bfbd91752fc16e6517fe9698d31a")).then(function (res) {
         console.log(res.data);
 
         _this2.setState({
-          forecast: res.data.list
+          forecast: res.data.list,
+          loading: false,
+          error: false
         });
       }).catch(function (error) {
-        return console.log(error);
+        _this2.setState({
+          error: true,
+          loading: false
+        });
       });
     }
   }, {
@@ -32532,7 +32573,7 @@ function (_Component) {
         name: "search"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
-      }, "Submit")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, "Submit")), this.state.error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Error: please make sure city exists") : null, this.state.loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Loading...") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast__WEBPACK_IMPORTED_MODULE_1__["default"], {
         forecast: this.state.forecast
       }));
     }

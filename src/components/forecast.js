@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { aggregateForecast } from '../utils';
+import ForecastTableItem from './forecast-table-item';
 
 export default class Forecast extends Component {
   constructor(props) {
@@ -18,18 +19,35 @@ export default class Forecast extends Component {
 
     return(
       <div>
-        <h3>Current Temperature: {currentTemp}</h3>
         {
           forecastByDay.length ?
-          forecastByDay.map((forecast, idx) => {
-            return (
-              <div key={idx}>
-                <p>Date: {forecast.date}</p>
-                <p>High: {forecast.high}</p>
-                <p>Low: {forecast.low}</p>
-              </div>
-            )
-          })
+          <div>
+            <h3>Current Temperature: {currentTemp}</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Day</th>
+                  <th>Description</th>
+                  <th>High / Low</th>
+                  <th>Precipitation</th>
+                  <th>Wind</th>
+                  <th>Humidity</th>
+                </tr>
+                {
+                  forecastByDay.map(forecast => {
+                    return (
+                      <ForecastTableItem
+                        key={forecast.date}
+                        date={forecast.date}
+                        high={forecast.high}
+                        low={forecast.low}
+                      />
+                    )
+                  })
+                }
+              </thead>
+            </table>
+          </div>
           : null
         }
       </div>
