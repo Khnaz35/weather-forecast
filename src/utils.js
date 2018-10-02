@@ -23,7 +23,7 @@ function aggregateForecast (cityForecast) {
     aggregatedElement.high = aggregatedElement.high ? Math.max(aggregatedElement.high, currentTemp) : currentTemp;
     aggregatedElement.low = aggregatedElement.low ? Math.min(aggregatedElement.low, currentTemp) : currentTemp;
   }
-  return aggregatedbyDay;
+  return aggregatedbyDay.slice(0, 5);
 }
 
 module.exports = { aggregateForecast };

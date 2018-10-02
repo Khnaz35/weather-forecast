@@ -20,7 +20,7 @@ export default class SearchLocation extends Component {
     event.preventDefault();
     this.setState({loading: true});
     const unit = event.target.unit.value === 'celcius' ? 'metric' : 'imperial';
-    const api_key = process.env.OPEN_WEATHER_MAP_API_KEY.slice(1, -1);
+    const api_key = process.env.OPEN_WEATHER_MAP_API_KEY;
     const city = event.target.search.value;
     event.target.reset();
 
