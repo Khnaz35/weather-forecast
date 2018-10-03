@@ -7,12 +7,12 @@ function aggregateForecast (cityForecast, timezone) {
   for(let i = 0; i < cityForecast.length; i++) {
     const currentElement = cityForecast[i];
     const currentElementMain = cityForecast[i].main;
-    currentDate = currentElement.dt_txt.slice(0, 10);
+    const convertedDate = convertTimeZone(currentElement.dt_txt, timezone);
     if(i > 0) {
-        prevDate = cityForecast[i-1].dt_txt.slice(0, 10);
+        prevDate = convertTimeZone(cityForecast[i-1].dt_txt, timezone);
       }
-    if(i === 0 || currentDate !== prevDate) {
-      const convertedDate = convertTimeZone(currentElement.dt_txt, timezone)
+      console.log(currentDate, prevDate, convertedDate)
+    if(i === 0 || convertedDate !== prevDate) {
       const forecast = {
         date: convertedDate,
         description: currentElement.weather[0].description,

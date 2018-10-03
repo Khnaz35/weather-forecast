@@ -50231,6 +50231,9 @@ var Footer = function Footer() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+
 
 
 var ForecastTableItem = function ForecastTableItem(props) {
@@ -50241,7 +50244,8 @@ var ForecastTableItem = function ForecastTableItem(props) {
       wind = props.wind,
       humidity = props.humidity,
       unit = props.unit;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, date), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, high, "\xB0 / ", low, "\xB0"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, wind, " ", unit === 'metric' ? 'KM/H' : 'MPH'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, humidity, "%"));
+  var dayOfWeek = moment__WEBPACK_IMPORTED_MODULE_1___default()(date).calendar().slice(0, -12);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, dayOfWeek), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, high, "\xB0 / ", low, "\xB0"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, wind, " ", unit === 'metric' ? 'KM/H' : 'MPH'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, humidity, "%"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ForecastTableItem);
@@ -50530,14 +50534,15 @@ function aggregateForecast(cityForecast, timezone) {
   for (var i = 0; i < cityForecast.length; i++) {
     var currentElement = cityForecast[i];
     var currentElementMain = cityForecast[i].main;
-    currentDate = currentElement.dt_txt.slice(0, 10);
+    var convertedDate = convertTimeZone(currentElement.dt_txt, timezone);
 
     if (i > 0) {
-      prevDate = cityForecast[i - 1].dt_txt.slice(0, 10);
+      prevDate = convertTimeZone(cityForecast[i - 1].dt_txt, timezone);
     }
 
-    if (i === 0 || currentDate !== prevDate) {
-      var convertedDate = convertTimeZone(currentElement.dt_txt, timezone);
+    console.log(currentDate, prevDate, convertedDate);
+
+    if (i === 0 || convertedDate !== prevDate) {
       var forecast = {
         date: convertedDate,
         description: currentElement.weather[0].description,
@@ -50559,7 +50564,40 @@ function aggregateForecast(cityForecast, timezone) {
 function convertTimeZone(timestamp, timezone) {
   var utc = moment.tz(timestamp, 'Europe/London').format();
   return moment.tz(utc, timezone).format().slice(0, 10);
-}
+} // const moment = require('moment-timezone');
+// function aggregateForecast (cityForecast, timezone) {
+//   const aggregatedbyDay = [];
+//   let prevDate;
+//   let currentDate;
+//   for(let i = 0; i < cityForecast.length; i++) {
+//     const currentElement = cityForecast[i];
+//     const currentElementMain = cityForecast[i].main;
+//     currentDate = currentElement.dt_txt.slice(0, 10);
+//     if(i > 0) {
+//         prevDate = cityForecast[i-1].dt_txt.slice(0, 10);
+//       }
+//     if(i === 0 || currentDate !== prevDate) {
+//       const convertedDate = convertTimeZone(currentElement.dt_txt, timezone)
+//       const forecast = {
+//         date: convertedDate,
+//         description: currentElement.weather[0].description,
+//         wind: currentElement.wind.speed,
+//         humidity: currentElementMain.humidity
+//       }
+//       aggregatedbyDay.push(forecast)
+//     }
+//     let aggregatedElement = aggregatedbyDay[aggregatedbyDay.length-1];
+//     const currentTemp = currentElementMain.temp;
+//     aggregatedElement.high = aggregatedElement.high ? Math.max(aggregatedElement.high, currentTemp) : currentTemp;
+//     aggregatedElement.low = aggregatedElement.low ? Math.min(aggregatedElement.low, currentTemp) : currentTemp;
+//   }
+//   return aggregatedbyDay.slice(0, 5);
+// }
+// function convertTimeZone(timestamp, timezone) {
+//     let utc = moment.tz(timestamp, 'Europe/London').format();
+//     return moment.tz(utc, timezone).format().slice(0, 10);
+// }
+
 
 module.exports = {
   aggregateForecast: aggregateForecast
