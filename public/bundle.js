@@ -50175,11 +50175,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_search_location__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/search-location */ "./src/components/search-location.js");
 
 
+var weather_api_key = "af80bfbd91752fc16e6517fe9698d31a";
+var weather_api = "https://api.openweathermap.org/data/2.5";
+var timezonedb_api = "http://api.timezonedb.com/v2.1/get-time-zone?key=TTUJNWPVX4K6&format=json&";
 
 var App = function App() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "app"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "5-Day Weather Forecast"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_search_location__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "5-Day Weather Forecast"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_search_location__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    weather_api_key: weather_api_key,
+    weather_api: weather_api,
+    timezonedb_api: timezonedb_api
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -50225,7 +50232,6 @@ var ForecastTableItem = function ForecastTableItem(props) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Forecast; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -50233,74 +50239,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils */ "./src/utils.js");
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _forecast_table_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./forecast-table-item */ "./src/components/forecast-table-item.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
 
 
 
+var Forecast = function Forecast(props) {
+  var cityInfo = props.cityInfo,
+      forecast = props.forecast,
+      unit = props.unit;
+  var currentTemp = forecast.length ? forecast[0].main.temp : null;
+  var forecastByDay = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["aggregateForecast"])(forecast, cityInfo.timezoneName);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, forecastByDay.length ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, cityInfo.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Current temperature: ", forecast[0].main.temp, "\xB0 ", unit === 'metric' ? 'celcius' : 'farenheit'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Day"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "High / Low"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Wind"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Humidity")), forecastByDay.map(function (forecast) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast_table_item__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      key: forecast.date,
+      date: forecast.date,
+      high: forecast.high,
+      low: forecast.low,
+      description: forecast.description,
+      wind: forecast.wind,
+      humidity: forecast.humidity,
+      unit: unit
+    });
+  })))) : null);
+};
 
-var Forecast =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(Forecast, _Component);
-
-  function Forecast(props) {
-    var _this;
-
-    _classCallCheck(this, Forecast);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Forecast).call(this, props));
-    _this.state = {
-      forecast: []
-    };
-    return _this;
-  }
-
-  _createClass(Forecast, [{
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          cityInfo = _this$props.cityInfo,
-          forecast = _this$props.forecast,
-          unit = _this$props.unit;
-      var currentTemp = forecast.length ? forecast[0].main.temp : null;
-      var forecastByDay = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["aggregateForecast"])(forecast, cityInfo.timezoneName);
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, forecastByDay.length ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, cityInfo.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Current temperature: ", forecast[0].main.temp, "\xB0 ", unit === 'metric' ? 'celcius' : 'farenheit'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Day"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "High / Low"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Wind"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Humidity")), forecastByDay.map(function (forecast) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast_table_item__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          key: forecast.date,
-          date: forecast.date,
-          high: forecast.high,
-          low: forecast.low,
-          description: forecast.description,
-          wind: forecast.wind,
-          humidity: forecast.humidity,
-          unit: unit
-        });
-      })))) : null);
-    }
-  }]);
-
-  return Forecast;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
-
-
+/* harmony default export */ __webpack_exports__["default"] = (Forecast);
 
 /***/ }),
 
@@ -50372,28 +50336,29 @@ function (_Component) {
       this.setState({
         loading: true
       });
+      var _this$props = this.props,
+          weather_api_key = _this$props.weather_api_key,
+          weather_api = _this$props.weather_api,
+          timezonedb_api = _this$props.timezonedb_api;
       var unit = event.target.unit.value === 'celcius' ? 'metric' : 'imperial';
-      var api_key = "af80bfbd91752fc16e6517fe9698d31a";
       var city = event.target.search.value;
       event.target.reset();
-      var lat;
-      var lon;
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("https://api.openweathermap.org/data/2.5/forecast?q=".concat(city, "&type=accurate&units=").concat(unit, "&APPID=").concat(api_key)).then(function (res) {
+      var lat, lon, forecastData;
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("".concat(weather_api, "/forecast?q=").concat(city, "&type=accurate&units=").concat(unit, "&APPID=").concat(weather_api_key)).then(function (res) {
         console.log(res.data);
         lat = res.data.city.coord.lat;
         lon = res.data.city.coord.lon;
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("http://api.timezonedb.com/v2.1/get-time-zone?key=TTUJNWPVX4K6&format=json&by=position&lat=".concat(lat, "&lng=").concat(lon)).then(function (timezoneData) {
-          res.data.city.timezoneName = timezoneData.data.zoneName;
+        forecastData = res.data;
+        return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("".concat(timezonedb_api, "by=position&lat=").concat(lat, "&lng=").concat(lon)).then(function (timezoneData) {
+          forecastData.city.timezoneName = timezoneData.data.zoneName;
 
           _this2.setState({
-            cityInfo: res.data.city,
-            forecast: res.data.list,
+            cityInfo: forecastData.city,
+            forecast: forecastData.list,
             unit: unit,
             loading: false,
             error: false
           });
-        }).catch(function (err) {
-          return console.log(err);
         });
       }).catch(function (error) {
         _this2.setState({
@@ -50419,7 +50384,7 @@ function (_Component) {
         value: "celcius"
       }, "Celcius")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
-      }, "Submit")), this.state.error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Error: please make sure city exists") : null, this.state.loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Loading...") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, "Submit")), this.state.error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Error: please make sure city exists") : null, this.state.loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Loading weather forecast...") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast__WEBPACK_IMPORTED_MODULE_1__["default"], {
         cityInfo: this.state.cityInfo,
         forecast: this.state.forecast,
         unit: this.state.unit
