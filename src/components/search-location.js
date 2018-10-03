@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Forecast from './forecast';
 import axios from 'axios';
 
+
+
 export default class SearchLocation extends Component {
   constructor(props) {
     super(props);
@@ -19,15 +21,23 @@ export default class SearchLocation extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.setState({loading: true});
+    const { weather_api_key, weather_api, timezonedb_api } = this.props;
     const unit = event.target.unit.value === 'celcius' ? 'metric' : 'imperial';
-    const api_key = process.env.OPEN_WEATHER_MAP_API_KEY;
     const city = event.target.search.value;
     event.target.reset();
+    let lat, lon, forecastData;
 
-    axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&type=accurate&units=${unit}&APPID=${api_key}`)
+    axios.get(`${weather_api}/forecast?q=${city}&type=accurate&units=${unit}&APPID=${weather_api_key}`)
     .then(res => {
       console.log(res.data)
-      this.setState({cityInfo: res.data.city, forecast: res.data.list, unit: unit, loading: false, error: false});
+      lat = res.data.city.coord.lat;
+      lon = res.data.city.coord.lon;
+      forecastData = res.data;
+      return axios.get(`${timezonedb_api}by=position&lat=${lat}&lng=${lon}`)
+    .then(timezoneData => {
+        forecastData.city.timezoneName = timezoneData.data.zoneName;
+        this.setState({cityInfo: forecastData.city, forecast: forecastData.list, unit: unit, loading: false, error: false});
+      })
     })
     .catch(error => {
       this.setState({error: true, loading: false})
@@ -53,7 +63,7 @@ export default class SearchLocation extends Component {
         }
         {
           this.state.loading ?
-          <h3>Loading...</h3>
+          <h3>Loading weather forecast...</h3>
           : <Forecast
             cityInfo={this.state.cityInfo}
             forecast={this.state.forecast}
