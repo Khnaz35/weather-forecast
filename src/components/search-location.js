@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Forecast from './forecast';
+import Welcome from './welcome-message';
 import axios from 'axios';
+
 
 
 
@@ -46,31 +48,50 @@ export default class SearchLocation extends Component {
 
   render() {
 
+    const { cityInfo, forecast, unit, error, loading } = this.state;
+
     return (
       <div className='main-container'>
+        {
+          forecast.length ?
+          null
+          : <Welcome />
+        }
+
         <form onSubmit={this.handleSubmit}>
-          <input type='text' placeholder='Search by city name...' name='search'></input>
-          <select name='unit'>
-            <option value='farenheit'>Farenheit</option>
-            <option value='celcius'>Celcius</option>
-          </select>
-          <button type="submit">Submit</button>
+          <div className='form-input-container'>
+            <input type='text'
+              placeholder='Search by city name...'
+              name='search'>
+            </input>
+            <div className='styled-select blue semi-square'>
+              <select name='unit'>
+                <option value='farenheit'>Farenheit</option>
+                <option value='celcius'>Celcius</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit">Get forecast</button>
         </form>
         {
-          this.state.error ?
+          error && !loading ?
           <h3>Error: please make sure city exists</h3>
           : null
         }
         {
-          this.state.loading ?
+          loading ?
           <h3>Loading weather forecast...</h3>
-          : <Forecast
-            cityInfo={this.state.cityInfo}
-            forecast={this.state.forecast}
-            unit={this.state.unit}
+          : !error ? <Forecast
+            cityInfo={cityInfo}
+            forecast={forecast}
+            unit={unit}
             />
+            : null
         }
       </div>
     )
   }
 }
+
+
+

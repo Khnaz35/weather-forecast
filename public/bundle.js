@@ -50184,9 +50184,7 @@ var weather_api = "https://api.openweathermap.org/data/2.5";
 var timezonedb_api = "http://api.timezonedb.com/v2.1/get-time-zone?key=TTUJNWPVX4K6&format=json&";
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "app"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_header__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_search_location__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_header__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_search_location__WEBPACK_IMPORTED_MODULE_1__["default"], {
     weather_api_key: weather_api_key,
     weather_api: weather_api,
     timezonedb_api: timezonedb_api
@@ -50335,8 +50333,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _forecast__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./forecast */ "./src/components/forecast.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _welcome_message__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./welcome-message */ "./src/components/welcome-message.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -50354,6 +50353,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 
 
 
@@ -50398,12 +50398,12 @@ function (_Component) {
       var city = event.target.search.value;
       event.target.reset();
       var lat, lon, forecastData;
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("".concat(weather_api, "/forecast?q=").concat(city, "&type=accurate&units=").concat(unit, "&APPID=").concat(weather_api_key)).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("".concat(weather_api, "/forecast?q=").concat(city, "&type=accurate&units=").concat(unit, "&APPID=").concat(weather_api_key)).then(function (res) {
         console.log(res.data);
         lat = res.data.city.coord.lat;
         lon = res.data.city.coord.lon;
         forecastData = res.data;
-        return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("".concat(timezonedb_api, "by=position&lat=").concat(lat, "&lng=").concat(lon)).then(function (timezoneData) {
+        return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("".concat(timezonedb_api, "by=position&lat=").concat(lat, "&lng=").concat(lon)).then(function (timezoneData) {
           forecastData.city.timezoneName = timezoneData.data.zoneName;
 
           _this2.setState({
@@ -50424,27 +50424,37 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this$state = this.state,
+          cityInfo = _this$state.cityInfo,
+          forecast = _this$state.forecast,
+          unit = _this$state.unit,
+          error = _this$state.error,
+          loading = _this$state.loading;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "main-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }, forecast.length ? null : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_welcome_message__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-input-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         placeholder: "Search by city name...",
         name: "search"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "styled-select blue semi-square"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         name: "unit"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "farenheit"
       }, "Farenheit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "celcius"
-      }, "Celcius")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Celcius")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
-      }, "Submit")), this.state.error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Error: please make sure city exists") : null, this.state.loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Loading weather forecast...") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        cityInfo: this.state.cityInfo,
-        forecast: this.state.forecast,
-        unit: this.state.unit
-      }));
+      }, "Get forecast")), error && !loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Error: please make sure city exists") : null, loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Loading weather forecast...") : !error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        cityInfo: cityInfo,
+        forecast: forecast,
+        unit: unit
+      }) : null);
     }
   }]);
 
@@ -50452,6 +50462,33 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
+
+/***/ }),
+
+/***/ "./src/components/welcome-message.js":
+/*!*******************************************!*\
+  !*** ./src/components/welcome-message.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var Welcome = function Welcome() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "welcome-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    className: "welcome"
+  }, "Welcome to 5-Day Weather Forecast!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "welcome"
+  }, "Begin by typing the city name below."));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Welcome);
 
 /***/ }),
 
