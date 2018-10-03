@@ -15,7 +15,7 @@ export default class Forecast extends Component {
   render() {
     const { cityInfo, forecast, unit } = this.props;
     const currentTemp = forecast.length ? forecast[0].main.temp : null;
-    const forecastByDay = aggregateForecast(forecast);
+    const forecastByDay = aggregateForecast(forecast, cityInfo.timezoneName);
 
     return(
       <div>

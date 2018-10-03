@@ -23,11 +23,21 @@ export default class SearchLocation extends Component {
     const api_key = process.env.OPEN_WEATHER_MAP_API_KEY;
     const city = event.target.search.value;
     event.target.reset();
+    let lat;
+    let lon;
+
 
     axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&type=accurate&units=${unit}&APPID=${api_key}`)
     .then(res => {
       console.log(res.data)
-      this.setState({cityInfo: res.data.city, forecast: res.data.list, unit: unit, loading: false, error: false});
+      lat = res.data.city.coord.lat;
+      lon = res.data.city.coord.lon;
+      axios.get(`http://api.timezonedb.com/v2.1/get-time-zone?key=TTUJNWPVX4K6&format=json&by=position&lat=${lat}&lng=${lon}`)
+      .then(timezoneData => {
+        res.data.city.timezoneName = timezoneData.data.zoneName
+        this.setState({cityInfo: res.data.city, forecast: res.data.list, unit: unit, loading: false, error: false});
+      })
+      .catch(err => console.log(err))
     })
     .catch(error => {
       this.setState({error: true, loading: false})
