@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import Forecast from './forecast';
+import React from 'react';
 
 const ForecastTableItem = (props) => {
   const { date, high, low, description, wind, humidity, unit } = props;

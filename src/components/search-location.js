@@ -47,7 +47,7 @@ export default class SearchLocation extends Component {
   render() {
 
     return (
-      <div>
+      <div className='main-container'>
         <form onSubmit={this.handleSubmit}>
           <input type='text' placeholder='Search by city name...' name='search'></input>
           <select name='unit'>

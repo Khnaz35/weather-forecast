@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import SearchLocation from './components/search-location';
+import Header from './components/header';
+import Footer from './components/footer';
 
 const weather_api_key = process.env.OPEN_WEATHER_MAP_API_KEY;
 const weather_api = process.env.OPEN_WEATHER_MAP_API;
@@ -8,13 +10,14 @@ const timezonedb_api = process.env.TIMEZONEDB_API;
 const App = () => {
 
     return (
-      <div id='app'>
-        <h1>5-Day Weather Forecast</h1>
+      <div>
+        <Header />
         <SearchLocation
           weather_api_key={weather_api_key}
           weather_api={weather_api}
           timezonedb_api={timezonedb_api}
         />
+        <Footer />
       </div>
     );
 };
