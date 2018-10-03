@@ -13,8 +13,10 @@ const Forecast = (props) => {
       {
         forecastByDay.length ?
         <div>
-          <h2>{cityInfo.name}</h2>
-          <h3>Current temperature: {forecast[0].main.temp}&#176; {unit === 'metric' ? 'celcius' : 'farenheit'}</h3>
+          <div className='forecast-header-container'>
+            <h2>{cityInfo.name}</h2>
+            <h3>Current temperature: {forecast[0].main.temp}&#176; {unit === 'metric' ? 'celcius' : 'farenheit'}</h3>
+          </div>
           <div className='table-container'>
             <table>
               <thead>

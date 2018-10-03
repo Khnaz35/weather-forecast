@@ -75,7 +75,7 @@ export default class SearchLocation extends Component {
         </form>
         {
           error && !loading ?
-          <h3>Error: please make sure city exists</h3>
+          <h3 className='error'>Error: please make sure city exists</h3>
           : null
         }
         {

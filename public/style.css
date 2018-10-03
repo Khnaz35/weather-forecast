@@ -18,6 +18,11 @@ button:hover {
 body {
   background-color: #c0bbbb;
   margin: 0;
+  font-family: "Lato", "Open Sans", "Helvetica Neue", Arial;
+}
+
+.error {
+  color: #ff7913;
 }
 
 input[type=text] {
@@ -37,7 +42,6 @@ input[type=text] {
 
 .form-input-container {
   display: flex;
-  /*flex-direction: column;*/
   justify-content: center;
   align-items: center;
 }
@@ -51,7 +55,6 @@ input[type=text] {
   bottom: 0;
   width: 100%;
   background-color: #241c1c;
-
 }
 
 .header-container {
@@ -84,6 +87,14 @@ table {
   border-collapse: collapse;
 }
 
+th {
+  background-color: #ddd;
+}
+
+tr:hover {
+  background-color: #3c8ed2;
+}
+
 th,
 td {
   padding: 10px;
@@ -108,4 +119,8 @@ td {
  padding: 5px;
  width: 268px;
  color: #ddd;
+}
+
+.welcome-container {
+  margin: 3%;
 }

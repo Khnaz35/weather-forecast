@@ -50279,7 +50279,9 @@ var Forecast = function Forecast(props) {
       unit = props.unit;
   var currentTemp = forecast.length ? forecast[0].main.temp : null;
   var forecastByDay = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["aggregateForecast"])(forecast, cityInfo.timezoneName);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, forecastByDay.length ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, cityInfo.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Current temperature: ", forecast[0].main.temp, "\xB0 ", unit === 'metric' ? 'celcius' : 'farenheit'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, forecastByDay.length ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "forecast-header-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, cityInfo.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Current temperature: ", forecast[0].main.temp, "\xB0 ", unit === 'metric' ? 'celcius' : 'farenheit')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "table-container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Day"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "High / Low"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Wind"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Humidity")), forecastByDay.map(function (forecast) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast_table_item__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -50454,7 +50456,9 @@ function (_Component) {
         value: "celcius"
       }, "Celcius")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
-      }, "Get forecast")), error && !loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Error: please make sure city exists") : null, loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Loading weather forecast...") : !error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, "Get forecast")), error && !loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "error"
+      }, "Error: please make sure city exists") : null, loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Loading weather forecast...") : !error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast__WEBPACK_IMPORTED_MODULE_1__["default"], {
         cityInfo: cityInfo,
         forecast: forecast,
         unit: unit
@@ -50485,11 +50489,7 @@ __webpack_require__.r(__webpack_exports__);
 var Welcome = function Welcome() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "welcome-container"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
-    className: "welcome"
-  }, "Welcome to 5-Day Weather Forecast!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "welcome"
-  }, "Begin by typing the city name below."));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Welcome to 5-Day Weather Forecast!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Begin by typing the city name below."));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Welcome);
@@ -50564,40 +50564,7 @@ function aggregateForecast(cityForecast, timezone) {
 function convertTimeZone(timestamp, timezone) {
   var utc = moment.tz(timestamp, 'Europe/London').format();
   return moment.tz(utc, timezone).format().slice(0, 10);
-} // const moment = require('moment-timezone');
-// function aggregateForecast (cityForecast, timezone) {
-//   const aggregatedbyDay = [];
-//   let prevDate;
-//   let currentDate;
-//   for(let i = 0; i < cityForecast.length; i++) {
-//     const currentElement = cityForecast[i];
-//     const currentElementMain = cityForecast[i].main;
-//     currentDate = currentElement.dt_txt.slice(0, 10);
-//     if(i > 0) {
-//         prevDate = cityForecast[i-1].dt_txt.slice(0, 10);
-//       }
-//     if(i === 0 || currentDate !== prevDate) {
-//       const convertedDate = convertTimeZone(currentElement.dt_txt, timezone)
-//       const forecast = {
-//         date: convertedDate,
-//         description: currentElement.weather[0].description,
-//         wind: currentElement.wind.speed,
-//         humidity: currentElementMain.humidity
-//       }
-//       aggregatedbyDay.push(forecast)
-//     }
-//     let aggregatedElement = aggregatedbyDay[aggregatedbyDay.length-1];
-//     const currentTemp = currentElementMain.temp;
-//     aggregatedElement.high = aggregatedElement.high ? Math.max(aggregatedElement.high, currentTemp) : currentTemp;
-//     aggregatedElement.low = aggregatedElement.low ? Math.min(aggregatedElement.low, currentTemp) : currentTemp;
-//   }
-//   return aggregatedbyDay.slice(0, 5);
-// }
-// function convertTimeZone(timestamp, timezone) {
-//     let utc = moment.tz(timestamp, 'Europe/London').format();
-//     return moment.tz(utc, timezone).format().slice(0, 10);
-// }
-
+}
 
 module.exports = {
   aggregateForecast: aggregateForecast
