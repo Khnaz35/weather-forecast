@@ -36,6 +36,7 @@ const Forecast = (props) => {
                         high={forecast.high}
                         low={forecast.low}
                         description={forecast.description}
+                        icon={forecast.icon}
                         wind={forecast.wind}
                         humidity={forecast.humidity}
                         unit={unit}

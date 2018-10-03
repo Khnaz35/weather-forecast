@@ -50241,11 +50241,22 @@ var ForecastTableItem = function ForecastTableItem(props) {
       high = props.high,
       low = props.low,
       description = props.description,
+      icon = props.icon,
       wind = props.wind,
       humidity = props.humidity,
       unit = props.unit;
   var dayOfWeek = moment__WEBPACK_IMPORTED_MODULE_1___default()(date).calendar().slice(0, -12);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, dayOfWeek), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, high, "\xB0 / ", low, "\xB0"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, wind, " ", unit === 'metric' ? 'KM/H' : 'MPH'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, humidity, "%"));
+  var iconUrl = "http://openweathermap.org/img/w/".concat(icon, ".png");
+  var iconStyle = {
+    backgroundImage: "url(".concat(iconUrl, ")"),
+    backgroundSize: '20px',
+    backgroundPosition: '10px 10px',
+    backgroundRepeat: 'no-repeat'
+  };
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, dayOfWeek), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+    style: iconStyle,
+    className: "description"
+  }, description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, high, "\xB0 / ", low, "\xB0"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, wind, " ", unit === 'metric' ? 'KM/H' : 'MPH'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, humidity, "%"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ForecastTableItem);
@@ -50290,6 +50301,7 @@ var Forecast = function Forecast(props) {
       high: forecast.high,
       low: forecast.low,
       description: forecast.description,
+      icon: forecast.icon,
       wind: forecast.wind,
       humidity: forecast.humidity,
       unit: unit
@@ -50540,12 +50552,11 @@ function aggregateForecast(cityForecast, timezone) {
       prevDate = convertTimeZone(cityForecast[i - 1].dt_txt, timezone);
     }
 
-    console.log(currentDate, prevDate, convertedDate);
-
     if (i === 0 || convertedDate !== prevDate) {
       var forecast = {
         date: convertedDate,
         description: currentElement.weather[0].description,
+        icon: "".concat(currentElement.weather[0].icon.slice(0, -1), "d"),
         wind: currentElement.wind.speed,
         humidity: currentElementMain.humidity
       };

@@ -21,6 +21,10 @@ body {
   font-family: "Lato", "Open Sans", "Helvetica Neue", Arial;
 }
 
+.description {
+  padding: 12px 20px 12px 40px;
+}
+
 .error {
   color: #ff7913;
 }

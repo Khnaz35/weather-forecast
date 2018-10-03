@@ -11,11 +11,11 @@ function aggregateForecast (cityForecast, timezone) {
     if(i > 0) {
         prevDate = convertTimeZone(cityForecast[i-1].dt_txt, timezone);
       }
-      console.log(currentDate, prevDate, convertedDate)
     if(i === 0 || convertedDate !== prevDate) {
       const forecast = {
         date: convertedDate,
         description: currentElement.weather[0].description,
+        icon: `${currentElement.weather[0].icon.slice(0,-1)}d`,
         wind: currentElement.wind.speed,
         humidity: currentElementMain.humidity
       }
