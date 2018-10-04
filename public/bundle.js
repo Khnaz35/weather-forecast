@@ -50233,6 +50233,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils */ "./src/utils.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 
@@ -50247,12 +50250,7 @@ var ForecastTableItem = function ForecastTableItem(props) {
       unit = props.unit;
   var dayOfWeek = moment__WEBPACK_IMPORTED_MODULE_1___default()(date).calendar().slice(0, -12);
   var iconUrl = "http://openweathermap.org/img/w/".concat(icon, ".png");
-  var iconStyle = {
-    backgroundImage: "url(".concat(iconUrl, ")"),
-    backgroundSize: '20px',
-    backgroundPosition: '10px 10px',
-    backgroundRepeat: 'no-repeat'
-  };
+  var iconStyle = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["getIconStyle"])(iconUrl);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, dayOfWeek), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
     style: iconStyle,
     className: "description"
@@ -50313,6 +50311,51 @@ var Forecast = function Forecast(props) {
 
 /***/ }),
 
+/***/ "./src/components/form.js":
+/*!********************************!*\
+  !*** ./src/components/form.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var Form = function Form(props) {
+  var handleSubmit = props.handleSubmit,
+      handleChange = props.handleChange,
+      inputEmpty = props.inputEmpty; // let disabled = inputEmpty ? 'disabled' : null;
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmit
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-input-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    placeholder: "Search by city name...",
+    name: "search",
+    onChange: handleChange
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "styled-select blue semi-square"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+    name: "unit"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "farenheit"
+  }, "\xB0F"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "celcius"
+  }, "\xB0C")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "submit",
+    disabled: inputEmpty
+  }, "Get forecast"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Form);
+
+/***/ }),
+
 /***/ "./src/components/header.js":
 /*!**********************************!*\
   !*** ./src/components/header.js ***!
@@ -50352,8 +50395,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _forecast__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./forecast */ "./src/components/forecast.js");
 /* harmony import */ var _welcome_message__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./welcome-message */ "./src/components/welcome-message.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./form */ "./src/components/form.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -50377,6 +50421,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+
 var SearchLocation =
 /*#__PURE__*/
 function (_Component) {
@@ -50389,6 +50434,7 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(SearchLocation).call(this, props));
     _this.state = {
+      inputEmpty: true,
       cityInfo: {},
       forecast: [],
       unit: '',
@@ -50396,15 +50442,30 @@ function (_Component) {
       error: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(SearchLocation, [{
+    key: "handleChange",
+    value: function handleChange(event) {
+      if (event.target.value.length) {
+        this.setState({
+          inputEmpty: false
+        });
+      } else {
+        this.setState({
+          inputEmpty: true
+        });
+      }
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
       var _this2 = this;
 
       event.preventDefault();
+      event = event.target;
       this.setState({
         loading: true
       });
@@ -50412,16 +50473,15 @@ function (_Component) {
           weather_api_key = _this$props.weather_api_key,
           weather_api = _this$props.weather_api,
           timezonedb_api = _this$props.timezonedb_api;
-      var unit = event.target.unit.value === 'celcius' ? 'metric' : 'imperial';
-      var city = event.target.search.value;
-      event.target.reset();
+      var unit = event.unit.value === 'celcius' ? 'metric' : 'imperial';
+      var city = event.search.value;
+      event.reset();
       var lat, lon, forecastData;
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("".concat(weather_api, "/forecast?q=").concat(city, "&type=accurate&units=").concat(unit, "&APPID=").concat(weather_api_key)).then(function (res) {
-        console.log(res.data);
+      axios__WEBPACK_IMPORTED_MODULE_4___default.a.get("".concat(weather_api, "/forecast?q=").concat(city, "&type=accurate&units=").concat(unit, "&APPID=").concat(weather_api_key)).then(function (res) {
         lat = res.data.city.coord.lat;
         lon = res.data.city.coord.lon;
         forecastData = res.data;
-        return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("".concat(timezonedb_api, "by=position&lat=").concat(lat, "&lng=").concat(lon)).then(function (timezoneData) {
+        return axios__WEBPACK_IMPORTED_MODULE_4___default.a.get("".concat(timezonedb_api, "by=position&lat=").concat(lat, "&lng=").concat(lon)).then(function (timezoneData) {
           forecastData.city.timezoneName = timezoneData.data.zoneName;
 
           _this2.setState({
@@ -50429,13 +50489,15 @@ function (_Component) {
             forecast: forecastData.list,
             unit: unit,
             loading: false,
-            error: false
+            error: false,
+            inputEmpty: true
           });
         });
-      }).catch(function (error) {
+      }).catch(function () {
         _this2.setState({
           error: true,
-          loading: false
+          loading: false,
+          inputEmpty: true
         });
       });
     }
@@ -50447,28 +50509,15 @@ function (_Component) {
           forecast = _this$state.forecast,
           unit = _this$state.unit,
           error = _this$state.error,
-          loading = _this$state.loading;
+          loading = _this$state.loading,
+          inputEmpty = _this$state.inputEmpty;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "main-container"
-      }, forecast.length ? null : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_welcome_message__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-input-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        placeholder: "Search by city name...",
-        name: "search"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "styled-select blue semi-square"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        name: "unit"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "farenheit"
-      }, "\xB0F"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "celcius"
-      }, "\xB0C")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        type: "submit"
-      }, "Get forecast")), error && !loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+      }, forecast.length ? null : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_welcome_message__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        handleSubmit: this.handleSubmit,
+        handleChange: this.handleChange,
+        inputEmpty: inputEmpty
+      }), error && !loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "error"
       }, "Error: please make sure city exists") : null, loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Loading weather forecast...") : !error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast__WEBPACK_IMPORTED_MODULE_1__["default"], {
         cityInfo: cityInfo,
@@ -50577,8 +50626,18 @@ function convertTimeZone(timestamp, timezone) {
   return moment.tz(utc, timezone).format().slice(0, 10);
 }
 
+function getIconStyle(iconUrl) {
+  return {
+    backgroundImage: "url(".concat(iconUrl, ")"),
+    backgroundSize: '20px',
+    backgroundPosition: '10px 10px',
+    backgroundRepeat: 'no-repeat'
+  };
+}
+
 module.exports = {
-  aggregateForecast: aggregateForecast
+  aggregateForecast: aggregateForecast,
+  getIconStyle: getIconStyle
 };
 
 /***/ }),

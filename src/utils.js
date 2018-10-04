@@ -34,4 +34,13 @@ function convertTimeZone(timestamp, timezone) {
     return moment.tz(utc, timezone).format().slice(0, 10);
 }
 
-module.exports = { aggregateForecast };
+function getIconStyle(iconUrl) {
+  return {
+    backgroundImage: `url(${iconUrl})`,
+    backgroundSize: '20px',
+    backgroundPosition: '10px 10px',
+    backgroundRepeat: 'no-repeat'
+  }
+}
+
+module.exports = { aggregateForecast, getIconStyle };

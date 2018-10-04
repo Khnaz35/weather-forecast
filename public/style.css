@@ -1,3 +1,9 @@
+body {
+  background-color: #c0bbbb;
+  margin: 0;
+  font-family: "Lato", "Open Sans", "Helvetica Neue", Arial;
+}
+
 button {
   background-color: #3c8ed2;
   border: none;
@@ -7,18 +13,22 @@ button {
   width: 20%;
   margin: 1% 2px;
   cursor: pointer;
-  -webkit-transition-duration: 0.4s; /* Safari */
+  -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
+}
+
+button:disabled {
+  border: none;
+  background-color: #3c8ed2;
+  cursor: not-allowed
 }
 
 button:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
-body {
-  background-color: #c0bbbb;
-  margin: 0;
-  font-family: "Lato", "Open Sans", "Helvetica Neue", Arial;
+button:hover:disabled {
+  box-shadow: none;
 }
 
 .description {
@@ -27,6 +37,36 @@ body {
 
 .error {
   color: #ff7913;
+}
+
+.footer {
+  color: #ddd;
+  padding-left: 2%;
+}
+
+.footer-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #241c1c;
+}
+
+.form-input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  color: #544848;
+  text-align: center;
+  margin-top: 0;
+  padding: 2%;
+  letter-spacing: .5em;
+}
+
+.header-container {
+  background-color: #f7f5f5;
 }
 
 input[type=text] {
@@ -41,66 +81,8 @@ input[type=text] {
   color: #544848;
 }
 
-.form-input-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .main-container {
   text-align: center;
-}
-
-.footer-container {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #241c1c;
-}
-
-.header-container {
-  background-color: #f7f5f5;
-
-}
-
-.header {
-  color: #544848;
-  text-align: center;
-  margin-top: 0;
-  padding: 2%;
-  letter-spacing: .5em;
-}
-
-.footer {
-  color: #ddd;
-  padding-left: 2%;
-}
-
-
-
-.table-container {
-  display: flex;
-  justify-content: center;
-}
-
-table {
-  width: 60%;
-  border-collapse: collapse;
-}
-
-th {
-  background-color: #ddd;
-}
-
-tr:hover {
-  background-color: #3c8ed2;
-}
-
-th,
-td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
 }
 
 .styled-select {
@@ -110,10 +92,6 @@ td {
  width: 70px;
  border-radius: 5px;
  background-color: #012b3d;
- /*border-radius: 50%;
- height: 50px;
- width: 50px;*/
-
 }
 
 .styled-select select {
@@ -124,6 +102,31 @@ td {
  padding: 5px;
  width: 268px;
  color: #ddd;
+}
+
+table {
+  width: 60%;
+  border-collapse: collapse;
+}
+
+.table-container {
+  display: flex;
+  justify-content: center;
+}
+
+th {
+  background-color: #ddd;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+  background-color: #3c8ed2;
 }
 
 .welcome-container {
