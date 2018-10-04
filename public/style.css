@@ -34,11 +34,8 @@ input[type=text] {
   margin: 8px 16px;
   box-sizing: border-box;
   border: 1px solid #012b3d;
-  border-radius: 3%;
-  background-image: url('assets/search-icon.png');
+  background: url('assets/search-icon.png') no-repeat 10px;
   background-size: 20px;
-  background-position: 10px 10px;
-  background-repeat: no-repeat;
   background-color: #012b3d;
   padding: 12px 20px 12px 40px;
   color: #544848;
@@ -107,12 +104,16 @@ td {
 }
 
 .styled-select {
- background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 93% 0;
- height: 29px;
+ background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 80% 0;
  overflow: hidden;
- width: 120px;
+ height: 29px;
+ width: 70px;
  border-radius: 5px;
  background-color: #012b3d;
+ /*border-radius: 50%;
+ height: 50px;
+ width: 50px;*/
+
 }
 
 .styled-select select {

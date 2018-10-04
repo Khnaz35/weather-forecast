@@ -50464,9 +50464,9 @@ function (_Component) {
         name: "unit"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "farenheit"
-      }, "Farenheit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      }, "\xB0F"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "celcius"
-      }, "Celcius")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "\xB0C")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
       }, "Get forecast")), error && !loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "error"
@@ -50501,7 +50501,7 @@ __webpack_require__.r(__webpack_exports__);
 var Welcome = function Welcome() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "welcome-container"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Welcome to 5-Day Weather Forecast!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Begin by typing the city name below."));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Enter your city for the real-time weather forecast!"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Welcome);

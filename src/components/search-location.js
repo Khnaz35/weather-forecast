@@ -54,8 +54,8 @@ export default class SearchLocation extends Component {
       <div className='main-container'>
         {
           forecast.length ?
-          null
-          : <Welcome />
+            null
+            : <Welcome />
         }
 
         <form onSubmit={this.handleSubmit}>
@@ -66,8 +66,8 @@ export default class SearchLocation extends Component {
             </input>
             <div className='styled-select blue semi-square'>
               <select name='unit'>
-                <option value='farenheit'>Farenheit</option>
-                <option value='celcius'>Celcius</option>
+                <option value='farenheit'>&#176;F</option>
+                <option value='celcius'>&#176;C</option>
               </select>
             </div>
           </div>
@@ -75,13 +75,14 @@ export default class SearchLocation extends Component {
         </form>
         {
           error && !loading ?
-          <h3 className='error'>Error: please make sure city exists</h3>
-          : null
+            <h3 className='error'>Error: please make sure city exists</h3>
+            : null
         }
         {
           loading ?
-          <h3>Loading weather forecast...</h3>
-          : !error ? <Forecast
+            <h3>Loading weather forecast...</h3>
+            : !error ?
+            <Forecast
             cityInfo={cityInfo}
             forecast={forecast}
             unit={unit}

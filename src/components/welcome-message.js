@@ -3,8 +3,7 @@ import React from 'react';
 const Welcome = () => {
   return (
     <div className='welcome-container'>
-      <h2>Welcome to 5-Day Weather Forecast!</h2>
-      <p>Begin by typing the city name below.</p>
+      <h3>Enter your city for the real-time weather forecast!</h3>
     </div>
   )
 }
