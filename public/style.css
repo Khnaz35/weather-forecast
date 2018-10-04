@@ -70,7 +70,7 @@ button:hover:disabled {
 }
 
 input[type=text] {
-  width: 35%;
+  width: 75%;
   margin: 8px 16px;
   box-sizing: border-box;
   border: 1px solid #012b3d;
