@@ -66,9 +66,9 @@ h3.forecast-header {
 
 
 .form-input-container {
-  display: flex;
-  justify-content: center;
+  /*display: flex;
   align-items: center;
+  justify-content: center;*/
 }
 
 .header {
@@ -85,7 +85,8 @@ h3.forecast-header {
 }
 
 input[type=text] {
-  width: 75%;
+  display: inline;
+  width: 30%;
   margin: 8px 16px;
   box-sizing: border-box;
   border: 1px solid #c1bbbb;
@@ -104,9 +105,9 @@ input[type=text] {
  background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 80% 0;
  overflow: hidden;
  height: 29px;
- width: 70px;
  border-radius: 5px;
  background-color: #c1bbbb;
+ display: inline;
 }
 
 .styled-select select {
@@ -115,7 +116,7 @@ input[type=text] {
  font-size: 14px;
  height: 29px;
  padding: 5px;
- width: 268px;
+ width: 50px;
  color: #012b3d;
 }
 

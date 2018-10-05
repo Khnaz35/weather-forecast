@@ -51724,7 +51724,7 @@ module.exports = function(module) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_search_location__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/search-location */ "./src/components/search-location.js");
 /* harmony import */ var _components_header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/header */ "./src/components/header.js");
@@ -51735,7 +51735,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var weather_api_key = "af80bfbd91752fc16e6517fe9698d31a";
 var weather_api = "https://api.openweathermap.org/data/2.5";
-var google_api = "AIzaSyD654a8k5Mwvlww-QA5zBc9FG0k_ieMKUg";
+var google_api = process.env.GOOGLE_API_KEY;
 var timezonedb_api = "http://api.timezonedb.com/v2.1/get-time-zone?key=TTUJNWPVX4K6&format=json&";
 
 var App = function App() {
@@ -51748,6 +51748,7 @@ var App = function App() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -51799,14 +51800,23 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(LocationSearchInput).call(this, props));
     _this.state = {
       address: '',
-      suggestedAddress: ''
+      update: false
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.setSuggestedAddress = _this.setSuggestedAddress.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(LocationSearchInput, [{
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps() {
+      if (this.props.selectedAddress) {
+        this.setState({
+          update: true,
+          address: this.props.selectedAddress
+        });
+      }
+    }
+  }, {
     key: "handleChange",
     value: function handleChange(address) {
       this.setState({
@@ -51814,24 +51824,22 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "setSuggestedAddress",
-    value: function setSuggestedAddress(suggestedAddress) {
-      this.setState({
-        suggestedAddress: suggestedAddress
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      console.log('!!', this.props.selectedAddress);
+      var address = this.props.selectedAddress ? this.props.selectedAddress : null;
+      var value;
 
-      console.log('!!!!!', this.state.suggestedAddress);
+      if (!address || this.state.update) {
+        value = this.state.address;
+      } else if (!this.state.update) {
+        value = address;
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_places_autocomplete__WEBPACK_IMPORTED_MODULE_1___default.a, {
-        value: this.state.suggestedAddress ? this.state.suggestedAddress : this.state.address,
+        value: value,
         onChange: this.handleChange,
-        onSelect: function onSelect() {
-          return _this2.props.handleSelect(_this2.state.address);
-        }
+        onSelect: this.props.handleSelect
       }, function (_ref) {
         var getInputProps = _ref.getInputProps,
             suggestions = _ref.suggestions,
@@ -51843,14 +51851,7 @@ function (_React$Component) {
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "autocomplete-dropdown-container"
         }, loading && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading..."), suggestions.map(function (suggestion) {
-          var activeSuggestion;
-
-          if (suggestion.active) {
-            activeSuggestion = suggestion.description;
-          }
-
-          var className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item'; // inline style for demonstration purpose
-
+          var className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
           var style = suggestion.active ? {
             backgroundColor: 'green',
             cursor: 'pointer'
@@ -51861,11 +51862,7 @@ function (_React$Component) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", getSuggestionItemProps(suggestion, {
             className: className,
             style: style
-          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-            onClick: function onClick() {
-              return _this2.setSuggestedAddress(activeSuggestion);
-            }
-          }, suggestion.description));
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, suggestion.description));
         })));
       });
     }
@@ -51969,14 +51966,14 @@ var Forecast = function Forecast(props) {
   var cityInfo = props.cityInfo,
       forecast = props.forecast,
       unit = props.unit,
-      address = props.address;
+      selectedAddress = props.selectedAddress;
   var currentTemp = forecast.length ? forecast[0].main.temp : null;
   var forecastByDay = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["aggregateForecast"])(forecast, cityInfo.timezoneName);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, forecastByDay.length ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "forecast-header-container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
     className: "forecast-header"
-  }, cityInfo.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+  }, selectedAddress), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
     className: "forecast-header"
   }, "Current temperature: ", forecast[0].main.temp, "\xB0 ", unit === 'metric' ? 'celcius' : 'farenheit')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "table-container"
@@ -52018,16 +52015,16 @@ var Form = function Form(props) {
   var handleSubmit = props.handleSubmit,
       inputEmpty = props.inputEmpty,
       handleSelect = props.handleSelect,
-      address = props.address;
+      selectedAddress = props.selectedAddress;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     onSubmit: handleSubmit
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-input-container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_auto_complete__WEBPACK_IMPORTED_MODULE_1__["default"], {
     handleSelect: handleSelect,
-    address: address
+    selectedAddress: selectedAddress
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "styled-select blue semi-square"
+    className: "styled-select"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
     name: "unit"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
@@ -52125,7 +52122,7 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(SearchLocation).call(this, props));
     _this.state = {
-      suggestedAddress: '',
+      selectedAddress: '',
       inputEmpty: true,
       latLng: {},
       cityInfo: {},
@@ -52134,40 +52131,29 @@ function (_Component) {
       loading: false,
       error: false
     };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this))); // this.handleChange = this.handleChange.bind(this);
-
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleSelect = _this.handleSelect.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
-  } // handleChange(event) {
-  //   const input = event.target.value;
-  //   if(input !== null) {
-  //     this.setState({inputEmpty: false});
-  //   }
-  //   else {
-  //     this.setState({inputEmpty: true});
-  //   }
-  // }
-
+  }
 
   _createClass(SearchLocation, [{
     key: "handleSelect",
-    value: function handleSelect(address) {
+    value: function handleSelect(selectedAddress, placeId) {
       var _this2 = this;
 
-      Object(react_places_autocomplete__WEBPACK_IMPORTED_MODULE_5__["geocodeByAddress"])(address).then(function (results) {
+      Object(react_places_autocomplete__WEBPACK_IMPORTED_MODULE_5__["geocodeByPlaceId"])(placeId).then(function (results) {
         return Object(react_places_autocomplete__WEBPACK_IMPORTED_MODULE_5__["getLatLng"])(results[0]);
       }).then(function (latLng) {
-        console.log('Success', latLng);
+        console.log('Success', selectedAddress);
 
         _this2.setState({
-          address: address,
+          selectedAddress: selectedAddress,
           latLng: latLng,
           inputEmpty: false
         });
       }).catch(function () {
         _this2.setState({
-          error: true,
-          inputEmpty: true
+          error: true
         });
       });
     }
@@ -52176,7 +52162,6 @@ function (_Component) {
     value: function handleSubmit(event) {
       var _this3 = this;
 
-      console.log('!!!!', this.state.latLng.lat, this.state.latLng.lng);
       event.preventDefault();
       event = event.target;
       this.setState({
@@ -52186,15 +52171,10 @@ function (_Component) {
           weather_api_key = _this$props.weather_api_key,
           weather_api = _this$props.weather_api,
           timezonedb_api = _this$props.timezonedb_api;
-      var unit = event.unit.value === 'celcius' ? 'metric' : 'imperial'; // const city = event.search.value;
-
-      event.reset();
+      var unit = event.unit.value === 'celcius' ? 'metric' : 'imperial';
       var latLng = this.state.latLng;
       var forecastData;
-      axios__WEBPACK_IMPORTED_MODULE_4___default.a.get("".concat(weather_api, "/forecast?units=").concat(unit, "&lat=").concat(latLng.lat, "&lon=").concat(latLng.lng, "&APPID=").concat(weather_api_key)) // axios.get(`${weather_api}/forecast?q=${city}&type=accurate&units=${unit}&APPID=${weather_api_key}`)
-      .then(function (res) {
-        // lat = res.data.city.coord.lat;
-        // lon = res.data.city.coord.lon;
+      axios__WEBPACK_IMPORTED_MODULE_4___default.a.get("".concat(weather_api, "/forecast?units=").concat(unit, "&lat=").concat(latLng.lat, "&lon=").concat(latLng.lng, "&APPID=").concat(weather_api_key)).then(function (res) {
         forecastData = res.data;
         return axios__WEBPACK_IMPORTED_MODULE_4___default.a.get("".concat(timezonedb_api, "by=position&lat=").concat(latLng.lat, "&lng=").concat(latLng.lng)).then(function (timezoneData) {
           forecastData.city.timezoneName = timezoneData.data.zoneName;
@@ -52226,21 +52206,21 @@ function (_Component) {
           error = _this$state.error,
           loading = _this$state.loading,
           inputEmpty = _this$state.inputEmpty,
-          suggestedAddress = _this$state.suggestedAddress;
-      console.log('address....', suggestedAddress);
+          selectedAddress = _this$state.selectedAddress;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "main-container"
       }, forecast.length ? null : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_welcome_message__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form__WEBPACK_IMPORTED_MODULE_3__["default"], {
         handleSubmit: this.handleSubmit,
         handleSelect: this.handleSelect,
-        inputEmpty: inputEmpty
+        inputEmpty: inputEmpty,
+        selectedAddress: selectedAddress
       }), error && !loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "error"
       }, "Error: please make sure city exists") : null, loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Loading weather forecast...") : !error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        address: suggestedAddress,
         cityInfo: cityInfo,
         forecast: forecast,
-        unit: unit
+        unit: unit,
+        selectedAddress: selectedAddress
       }) : null);
     }
   }]);

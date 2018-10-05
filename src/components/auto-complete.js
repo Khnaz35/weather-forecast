@@ -9,28 +9,39 @@ export default class LocationSearchInput extends React.Component {
     super(props);
     this.state = {
       address: '',
-      suggestedAddress: ''
+      update: false
     };
     this.handleChange = this.handleChange.bind(this);
-    this.setSuggestedAddress = this.setSuggestedAddress.bind(this);
+  }
+
+  componentWillReceiveProps() {
+    if(this.props.selectedAddress) {
+      this.setState({update: true, address: this.props.selectedAddress})
+    }
   }
 
   handleChange(address) {
     this.setState({ address });
   }
 
-  setSuggestedAddress(suggestedAddress) {
-    this.setState({ suggestedAddress });
-  }
-
   render() {
-    console.log('!!!!!', this.state.suggestedAddress)
+    console.log('!!', this.props.selectedAddress)
+    let address = this.props.selectedAddress ? this.props.selectedAddress : null;
+
+    let value;
+    if(!address || this.state.update) {
+      value = this.state.address
+    }
+    else if(!this.state.update) {
+      value = address
+    }
+
+
     return (
       <PlacesAutocomplete
-        value={this.state.suggestedAddress ? this.state.suggestedAddress : this.state.address}
+        value={value}
         onChange={this.handleChange}
-        onSelect={() => this.props.handleSelect(this.state.address)}
-
+        onSelect={this.props.handleSelect}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
@@ -43,14 +54,9 @@ export default class LocationSearchInput extends React.Component {
             <div  className="autocomplete-dropdown-container">
               {loading && <div>Loading...</div>}
               {suggestions.map(suggestion => {
-                let activeSuggestion;
-                if(suggestion.active) {
-                  activeSuggestion = suggestion.description;
-                }
                 const className = suggestion.active
                   ? 'suggestion-item--active'
                   : 'suggestion-item';
-                // inline style for demonstration purpose
                 const style = suggestion.active
                   ? { backgroundColor: 'green', cursor: 'pointer' }
                   : { backgroundColor: 'blue', cursor: 'pointer'};
@@ -62,7 +68,7 @@ export default class LocationSearchInput extends React.Component {
                       style,
                     })}
                   >
-                    <span onClick={() => this.setSuggestedAddress(activeSuggestion)}>{suggestion.description}</span>
+                    <span>{suggestion.description}</span>
                   </div>
                 );
               })}
