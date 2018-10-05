@@ -51726,7 +51726,7 @@ module.exports = function(module) {
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_search_location__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/search-location */ "./src/components/search-location.js");
+/* harmony import */ var _components_main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/main */ "./src/components/main.js");
 /* harmony import */ var _components_header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/header */ "./src/components/header.js");
 /* harmony import */ var _components_footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/footer */ "./src/components/footer.js");
 
@@ -51739,7 +51739,7 @@ var google_api = process.env.GOOGLE_API_KEY;
 var timezonedb_api = "http://api.timezonedb.com/v2.1/get-time-zone?key=TTUJNWPVX4K6&format=json&";
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_header__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_search_location__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_header__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_main__WEBPACK_IMPORTED_MODULE_1__["default"], {
     weather_api_key: weather_api_key,
     weather_api: weather_api,
     google_api: google_api,
@@ -51764,8 +51764,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LocationSearchInput; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_places_autocomplete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-places-autocomplete */ "./node_modules/react-places-autocomplete/dist/index.js");
-/* harmony import */ var react_places_autocomplete__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_places_autocomplete__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils */ "./src/utils.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_places_autocomplete__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-places-autocomplete */ "./node_modules/react-places-autocomplete/dist/index.js");
+/* harmony import */ var react_places_autocomplete__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_places_autocomplete__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -51787,6 +51789,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+
 var LocationSearchInput =
 /*#__PURE__*/
 function (_React$Component) {
@@ -51799,8 +51802,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(LocationSearchInput).call(this, props));
     _this.state = {
-      address: '',
-      update: false
+      input: '',
+      isUpdated: false
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
@@ -51811,32 +51814,27 @@ function (_React$Component) {
     value: function componentWillReceiveProps() {
       if (this.props.selectedAddress) {
         this.setState({
-          update: true,
-          address: this.props.selectedAddress
+          isUpdated: true,
+          input: this.props.selectedAddress
         });
       }
     }
   }, {
     key: "handleChange",
-    value: function handleChange(address) {
+    value: function handleChange(input) {
       this.setState({
-        address: address
+        input: input
       });
     }
   }, {
     key: "render",
     value: function render() {
-      console.log('!!', this.props.selectedAddress);
-      var address = this.props.selectedAddress ? this.props.selectedAddress : null;
-      var value;
-
-      if (!address || this.state.update) {
-        value = this.state.address;
-      } else if (!this.state.update) {
-        value = address;
-      }
-
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_places_autocomplete__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      var selectedAddress = this.props.selectedAddress;
+      var _this$state = this.state,
+          input = _this$state.input,
+          isUpdated = _this$state.isUpdated;
+      var value = Object(_utils__WEBPACK_IMPORTED_MODULE_1__["setValue"])(input, selectedAddress, isUpdated);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_places_autocomplete__WEBPACK_IMPORTED_MODULE_2___default.a, {
         value: value,
         onChange: this.handleChange,
         onSelect: this.props.handleSelect
@@ -51845,23 +51843,17 @@ function (_React$Component) {
             suggestions = _ref.suggestions,
             getSuggestionItemProps = _ref.getSuggestionItemProps,
             loading = _ref.loading;
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", getInputProps({
-          placeholder: 'Search Places ...',
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "autocomplete-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", getInputProps({
+          placeholder: 'Search places...',
           className: 'location-search-input'
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "autocomplete-dropdown-container"
         }, loading && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading..."), suggestions.map(function (suggestion) {
           var className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
-          var style = suggestion.active ? {
-            backgroundColor: 'green',
-            cursor: 'pointer'
-          } : {
-            backgroundColor: 'blue',
-            cursor: 'pointer'
-          };
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", getSuggestionItemProps(suggestion, {
-            className: className,
-            style: style
+            className: className
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, suggestion.description));
         })));
       });
@@ -51929,9 +51921,12 @@ var ForecastTableItem = function ForecastTableItem(props) {
       humidity = props.humidity,
       unit = props.unit;
   var dayOfWeek = moment__WEBPACK_IMPORTED_MODULE_1___default()(date).calendar().slice(0, -12);
+  var formattedDate = moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format("MMM Do");
   var iconUrl = "http://openweathermap.org/img/w/".concat(icon, ".png");
   var iconStyle = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["getIconStyle"])(iconUrl);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, dayOfWeek), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, dayOfWeek, " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "formattedDate"
+  }, formattedDate)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
     style: iconStyle,
     className: "description"
   }, description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, high, "\xB0 / ", low, "\xB0"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, wind, " ", unit === 'metric' ? 'KM/H' : 'MPH'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, humidity, "%"));
@@ -52018,9 +52013,7 @@ var Form = function Form(props) {
       selectedAddress = props.selectedAddress;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     onSubmit: handleSubmit
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "form-input-container"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_auto_complete__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_auto_complete__WEBPACK_IMPORTED_MODULE_1__["default"], {
     handleSelect: handleSelect,
     selectedAddress: selectedAddress
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -52066,16 +52059,16 @@ var Header = function Header() {
 
 /***/ }),
 
-/***/ "./src/components/search-location.js":
-/*!*******************************************!*\
-  !*** ./src/components/search-location.js ***!
-  \*******************************************/
+/***/ "./src/components/main.js":
+/*!********************************!*\
+  !*** ./src/components/main.js ***!
+  \********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SearchLocation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Main; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _forecast__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./forecast */ "./src/components/forecast.js");
@@ -52110,17 +52103,17 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
-var SearchLocation =
+var Main =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(SearchLocation, _Component);
+  _inherits(Main, _Component);
 
-  function SearchLocation(props) {
+  function Main(props) {
     var _this;
 
-    _classCallCheck(this, SearchLocation);
+    _classCallCheck(this, Main);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(SearchLocation).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Main).call(this, props));
     _this.state = {
       selectedAddress: '',
       inputEmpty: true,
@@ -52136,7 +52129,7 @@ function (_Component) {
     return _this;
   }
 
-  _createClass(SearchLocation, [{
+  _createClass(Main, [{
     key: "handleSelect",
     value: function handleSelect(selectedAddress, placeId) {
       var _this2 = this;
@@ -52144,8 +52137,6 @@ function (_Component) {
       Object(react_places_autocomplete__WEBPACK_IMPORTED_MODULE_5__["geocodeByPlaceId"])(placeId).then(function (results) {
         return Object(react_places_autocomplete__WEBPACK_IMPORTED_MODULE_5__["getLatLng"])(results[0]);
       }).then(function (latLng) {
-        console.log('Success', selectedAddress);
-
         _this2.setState({
           selectedAddress: selectedAddress,
           latLng: latLng,
@@ -52163,7 +52154,6 @@ function (_Component) {
       var _this3 = this;
 
       event.preventDefault();
-      event = event.target;
       this.setState({
         loading: true
       });
@@ -52171,7 +52161,7 @@ function (_Component) {
           weather_api_key = _this$props.weather_api_key,
           weather_api = _this$props.weather_api,
           timezonedb_api = _this$props.timezonedb_api;
-      var unit = event.unit.value === 'celcius' ? 'metric' : 'imperial';
+      var unit = event.target.unit.value === 'celcius' ? 'metric' : 'imperial';
       var latLng = this.state.latLng;
       var forecastData;
       axios__WEBPACK_IMPORTED_MODULE_4___default.a.get("".concat(weather_api, "/forecast?units=").concat(unit, "&lat=").concat(latLng.lat, "&lon=").concat(latLng.lng, "&APPID=").concat(weather_api_key)).then(function (res) {
@@ -52225,7 +52215,7 @@ function (_Component) {
     }
   }]);
 
-  return SearchLocation;
+  return Main;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
@@ -52302,23 +52292,27 @@ function aggregateForecast(cityForecast, timezone) {
     }
 
     if (i === 0 || convertedDate !== prevDate) {
-      var forecast = {
-        date: convertedDate,
-        description: currentElement.weather[0].description,
-        icon: "".concat(currentElement.weather[0].icon.slice(0, -1), "d"),
-        wind: currentElement.wind.speed,
-        humidity: currentElementMain.humidity
-      };
+      var forecast = setInitialForecast(convertedDate, currentElement);
       aggregatedbyDay.push(forecast);
     }
 
     var aggregatedElement = aggregatedbyDay[aggregatedbyDay.length - 1];
-    var currentTemp = currentElementMain.temp;
+    var currentTemp = currentElement.main.temp;
     aggregatedElement.high = aggregatedElement.high ? Math.max(aggregatedElement.high, currentTemp) : currentTemp;
     aggregatedElement.low = aggregatedElement.low ? Math.min(aggregatedElement.low, currentTemp) : currentTemp;
   }
 
   return aggregatedbyDay.slice(0, 5);
+}
+
+function setInitialForecast(date, forecast) {
+  return {
+    date: date,
+    description: forecast.weather[0].description,
+    icon: "".concat(forecast.weather[0].icon.slice(0, -1), "d"),
+    wind: forecast.wind.speed,
+    humidity: forecast.main.humidity
+  };
 }
 
 function convertTimeZone(timestamp, timezone) {
@@ -52335,9 +52329,18 @@ function getIconStyle(iconUrl) {
   };
 }
 
+function setValue(input, selectedAddress, isUpdated) {
+  if (!selectedAddress || isUpdated) {
+    return input;
+  } else if (!isUpdated) {
+    return selectedAddress;
+  }
+}
+
 module.exports = {
   aggregateForecast: aggregateForecast,
-  getIconStyle: getIconStyle
+  getIconStyle: getIconStyle,
+  setValue: setValue
 };
 
 /***/ }),

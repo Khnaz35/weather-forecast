@@ -5,12 +5,11 @@ const Form = (props) => {
   const { handleSubmit, inputEmpty, handleSelect, selectedAddress} = props;
   return (
     <form onSubmit={handleSubmit}>
-      <div className='form-input-container'>
+      <div>
         <LocationSearchInput
           handleSelect={handleSelect}
           selectedAddress={selectedAddress}
         />
-
         <div className='styled-select'>
           <select name='unit'>
             <option value='farenheit'>&#176;F</option>

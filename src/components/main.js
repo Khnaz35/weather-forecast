@@ -5,7 +5,7 @@ import Form from './form';
 import axios from 'axios';
 import { geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 
-export default class SearchLocation extends Component {
+export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,8 +26,11 @@ export default class SearchLocation extends Component {
     geocodeByPlaceId(placeId)
     .then(results => getLatLng(results[0]))
     .then(latLng => {
-      console.log('Success', selectedAddress)
-      this.setState({selectedAddress, latLng, inputEmpty: false});
+      this.setState({
+        selectedAddress,
+        latLng,
+        inputEmpty: false
+      });
     })
     .catch(() => {
       this.setState({error: true})
@@ -36,10 +39,9 @@ export default class SearchLocation extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    event = event.target;
     this.setState({loading: true});
     const { weather_api_key, weather_api, timezonedb_api } = this.props;
-    const unit = event.unit.value === 'celcius' ? 'metric' : 'imperial';
+    const unit = event.target.unit.value === 'celcius' ? 'metric' : 'imperial';
     const {latLng} = this.state;
     let forecastData;
     axios.get(`${weather_api}/forecast?units=${unit}&lat=${latLng.lat}&lon=${latLng.lng}&APPID=${weather_api_key}`)

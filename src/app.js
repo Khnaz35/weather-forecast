@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SearchLocation from './components/search-location';
+import Main from './components/main';
 import Header from './components/header';
 import Footer from './components/footer';
 
@@ -13,7 +13,7 @@ const App = () => {
     return (
       <div>
         <Header />
-        <SearchLocation
+        <Main
           weather_api_key={weather_api_key}
           weather_api={weather_api}
           google_api={google_api}

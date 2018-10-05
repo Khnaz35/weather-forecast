@@ -12,21 +12,25 @@ function aggregateForecast (cityForecast, timezone) {
         prevDate = convertTimeZone(cityForecast[i-1].dt_txt, timezone);
       }
     if(i === 0 || convertedDate !== prevDate) {
-      const forecast = {
-        date: convertedDate,
-        description: currentElement.weather[0].description,
-        icon: `${currentElement.weather[0].icon.slice(0,-1)}d`,
-        wind: currentElement.wind.speed,
-        humidity: currentElementMain.humidity
-      }
+      const forecast = setInitialForecast(convertedDate, currentElement);
       aggregatedbyDay.push(forecast)
     }
     let aggregatedElement = aggregatedbyDay[aggregatedbyDay.length-1];
-    const currentTemp = currentElementMain.temp;
+    const currentTemp = currentElement.main.temp;
     aggregatedElement.high = aggregatedElement.high ? Math.max(aggregatedElement.high, currentTemp) : currentTemp;
     aggregatedElement.low = aggregatedElement.low ? Math.min(aggregatedElement.low, currentTemp) : currentTemp;
   }
   return aggregatedbyDay.slice(0, 5);
+}
+
+function setInitialForecast(date, forecast) {
+  return {
+    date,
+    description: forecast.weather[0].description,
+    icon: `${forecast.weather[0].icon.slice(0,-1)}d`,
+    wind: forecast.wind.speed,
+    humidity: forecast.main.humidity
+  }
 }
 
 function convertTimeZone(timestamp, timezone) {
@@ -43,4 +47,13 @@ function getIconStyle(iconUrl) {
   }
 }
 
-module.exports = { aggregateForecast, getIconStyle };
+function setValue(input, selectedAddress, isUpdated) {
+  if(!selectedAddress || isUpdated) {
+    return input;
+  }
+  else if(!isUpdated) {
+    return selectedAddress;
+  }
+}
+
+module.exports = { aggregateForecast, getIconStyle, setValue };
