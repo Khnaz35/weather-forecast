@@ -51908,9 +51908,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils */ "./src/utils.js");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils__WEBPACK_IMPORTED_MODULE_2__);
-
 
 
 
@@ -51926,7 +51923,9 @@ var ForecastTableItem = function ForecastTableItem(props) {
   var dayOfWeek = moment__WEBPACK_IMPORTED_MODULE_1___default()(date).calendar().slice(0, -12);
   var formattedDate = moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format("MMM Do");
   var iconUrl = "http://openweathermap.org/img/w/".concat(icon, ".png");
-  var iconStyle = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["getIconStyle"])(iconUrl);
+  var iconStyle = {
+    backgroundImage: "url(".concat(iconUrl, ")")
+  };
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, dayOfWeek, " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "formattedDate"
   }, formattedDate)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
@@ -52326,15 +52325,6 @@ function convertTimeZone(timestamp, timezone) {
   return moment.tz(utc, timezone).format().slice(0, 10);
 }
 
-function getIconStyle(iconUrl) {
-  return {
-    backgroundImage: "url(".concat(iconUrl, ")"),
-    backgroundSize: '20px',
-    backgroundPosition: '10px 10px',
-    backgroundRepeat: 'no-repeat'
-  };
-}
-
 function setValue(input, selectedAddress, isUpdated) {
   if (!selectedAddress || isUpdated) {
     return input;
@@ -52345,8 +52335,8 @@ function setValue(input, selectedAddress, isUpdated) {
 
 module.exports = {
   aggregateForecast: aggregateForecast,
-  getIconStyle: getIconStyle,
-  setValue: setValue
+  setValue: setValue,
+  setInitialForecast: setInitialForecast
 };
 
 /***/ }),
