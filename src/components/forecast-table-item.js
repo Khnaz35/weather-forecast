@@ -1,13 +1,12 @@
 import React from 'react';
 import moment from 'moment';
-import { getIconStyle } from '../utils'
 
 const ForecastTableItem = (props) => {
   const { date, high, low, description, icon, wind, humidity, unit } = props;
   const dayOfWeek = moment(date).calendar().slice(0, -12);
   const formattedDate = moment(date).format("MMM Do");
   const iconUrl = `http://openweathermap.org/img/w/${icon}.png`
-  const iconStyle = getIconStyle(iconUrl);
+  const iconStyle = {backgroundImage: `url(${iconUrl})`}
   return (
     <tr>
       <td>{dayOfWeek} <span className='formattedDate'>{formattedDate}</span></td>

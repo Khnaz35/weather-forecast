@@ -38,15 +38,6 @@ function convertTimeZone(timestamp, timezone) {
     return moment.tz(utc, timezone).format().slice(0, 10);
 }
 
-function getIconStyle(iconUrl) {
-  return {
-    backgroundImage: `url(${iconUrl})`,
-    backgroundSize: '20px',
-    backgroundPosition: '10px 10px',
-    backgroundRepeat: 'no-repeat'
-  }
-}
-
 function setValue(input, selectedAddress, isUpdated) {
   if(!selectedAddress || isUpdated) {
     return input;
@@ -56,4 +47,4 @@ function setValue(input, selectedAddress, isUpdated) {
   }
 }
 
-module.exports = { aggregateForecast, getIconStyle, setValue };
+module.exports = { aggregateForecast, setValue, setInitialForecast };
