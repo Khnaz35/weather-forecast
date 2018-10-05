@@ -2,13 +2,20 @@ import React, { Component } from 'react';
 import Forecast from './forecast';
 import Welcome from './welcome-message';
 import Form from './form';
+
 import axios from 'axios';
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from 'react-places-autocomplete';
 
 export default class SearchLocation extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      address: '',
       inputEmpty: true,
+      latLng: {},
       cityInfo: {},
       forecast: [],
       unit: '',
@@ -16,33 +23,51 @@ export default class SearchLocation extends Component {
       error: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
-  handleChange(event) {
-    if(event.target.value.length) {
-      this.setState({inputEmpty: false});
-    }
-    else {
-      this.setState({inputEmpty: true});
-    }
+  // handleChange(event) {
+  //   const input = event.target.value;
+  //   if(input !== null) {
+  //     this.setState({inputEmpty: false});
+  //   }
+  //   else {
+  //     this.setState({inputEmpty: true});
+  //   }
+  // }
+
+  handleSelect(address) {
+    console.log('address', address)
+    geocodeByAddress(address)
+    .then(results => getLatLng(results[0]))
+    .then(latLng => {
+      console.log('Success', latLng)
+      this.setState({address, latLng, inputEmpty: false});
+    })
+    .catch(() => {
+      this.setState({error: true, inputEmpty: true})
+    });
   }
 
   handleSubmit(event) {
+    console.log('!!!!', this.state.latLng.lat, this.state.latLng.lng)
     event.preventDefault();
     event = event.target;
     this.setState({loading: true});
     const { weather_api_key, weather_api, timezonedb_api } = this.props;
     const unit = event.unit.value === 'celcius' ? 'metric' : 'imperial';
-    const city = event.search.value;
+    // const city = event.search.value;
     event.reset();
-    let lat, lon, forecastData;
-    axios.get(`${weather_api}/forecast?q=${city}&type=accurate&units=${unit}&APPID=${weather_api_key}`)
+    const {latLng} = this.state;
+    let forecastData;
+    axios.get(`${weather_api}/forecast?units=${unit}&lat=${latLng.lat}&lon=${latLng.lng}&APPID=${weather_api_key}`)
+    // axios.get(`${weather_api}/forecast?q=${city}&type=accurate&units=${unit}&APPID=${weather_api_key}`)
     .then(res => {
-      lat = res.data.city.coord.lat;
-      lon = res.data.city.coord.lon;
+      // lat = res.data.city.coord.lat;
+      // lon = res.data.city.coord.lon;
       forecastData = res.data;
-      return axios.get(`${timezonedb_api}by=position&lat=${lat}&lng=${lon}`)
+      return axios.get(`${timezonedb_api}by=position&lat=${latLng.lat}&lng=${latLng.lng}`)
     .then(timezoneData => {
       forecastData.city.timezoneName = timezoneData.data.zoneName;
       this.setState({cityInfo: forecastData.city, forecast: forecastData.list, unit: unit, loading: false, error: false, inputEmpty: true});
@@ -54,7 +79,7 @@ export default class SearchLocation extends Component {
   }
 
   render() {
-    const { cityInfo, forecast, unit, error, loading, inputEmpty } = this.state;
+    const { cityInfo, forecast, unit, error, loading, inputEmpty, address } = this.state;
     return (
       <div className='main-container'>
         {
@@ -62,10 +87,12 @@ export default class SearchLocation extends Component {
             null
             : <Welcome />
         }
+
         <Form
           handleSubmit={this.handleSubmit}
-          handleChange={this.handleChange}
+          handleSelect={this.handleSelect}
           inputEmpty={inputEmpty}
+          address={address}
         />
         {
           error && !loading ?

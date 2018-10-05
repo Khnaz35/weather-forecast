@@ -1,17 +1,16 @@
 import React from 'react';
+import LocationSearchInput from './auto-complete';
 
 const Form = (props) => {
-  const { handleSubmit, handleChange, inputEmpty} = props;
-  // let disabled = inputEmpty ? 'disabled' : null;
+  const { handleSubmit, inputEmpty, handleSelect, address} = props;
   return (
     <form onSubmit={handleSubmit}>
       <div className='form-input-container'>
-        <input type='text'
-          placeholder='Search by city name...'
-          name='search'
-          onChange={handleChange}>
+        <LocationSearchInput
+          handleSelect={handleSelect}
+          address={address}
+        />
 
-        </input>
         <div className='styled-select blue semi-square'>
           <select name='unit'>
             <option value='farenheit'>&#176;F</option>

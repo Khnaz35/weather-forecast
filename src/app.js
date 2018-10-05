@@ -5,6 +5,7 @@ import Footer from './components/footer';
 
 const weather_api_key = process.env.OPEN_WEATHER_MAP_API_KEY;
 const weather_api = process.env.OPEN_WEATHER_MAP_API;
+const google_api = process.env.GOOGLE_API_KEY;
 const timezonedb_api = process.env.TIMEZONEDB_API;
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         <SearchLocation
           weather_api_key={weather_api_key}
           weather_api={weather_api}
+          google_api={google_api}
           timezonedb_api={timezonedb_api}
         />
         <Footer />
