@@ -39,6 +39,8 @@
     "babel-loader": "^8.0.4",
     "chai": "^4.2.0",
     "dotenv-webpack": "^1.5.7",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.4",
     "webpack": "^4.20.2",
