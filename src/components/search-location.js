@@ -13,7 +13,7 @@ export default class SearchLocation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: '',
+      suggestedAddress: '',
       inputEmpty: true,
       latLng: {},
       cityInfo: {},
@@ -38,7 +38,6 @@ export default class SearchLocation extends Component {
   // }
 
   handleSelect(address) {
-    console.log('address', address)
     geocodeByAddress(address)
     .then(results => getLatLng(results[0]))
     .then(latLng => {
@@ -79,7 +78,8 @@ export default class SearchLocation extends Component {
   }
 
   render() {
-    const { cityInfo, forecast, unit, error, loading, inputEmpty, address } = this.state;
+    const { cityInfo, forecast, unit, error, loading, inputEmpty, suggestedAddress } = this.state;
+    console.log('address....', suggestedAddress)
     return (
       <div className='main-container'>
         {
@@ -92,7 +92,6 @@ export default class SearchLocation extends Component {
           handleSubmit={this.handleSubmit}
           handleSelect={this.handleSelect}
           inputEmpty={inputEmpty}
-          address={address}
         />
         {
           error && !loading ?
@@ -104,6 +103,7 @@ export default class SearchLocation extends Component {
             <h3>Loading weather forecast...</h3>
             : !error ?
             <Forecast
+            address={suggestedAddress}
             cityInfo={cityInfo}
             forecast={forecast}
             unit={unit}

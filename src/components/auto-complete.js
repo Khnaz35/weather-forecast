@@ -24,7 +24,7 @@ export default class LocationSearchInput extends React.Component {
   }
 
   render() {
-
+    console.log('!!!!!', this.state.suggestedAddress)
     return (
       <PlacesAutocomplete
         value={this.state.suggestedAddress ? this.state.suggestedAddress : this.state.address}
@@ -52,8 +52,8 @@ export default class LocationSearchInput extends React.Component {
                   : 'suggestion-item';
                 // inline style for demonstration purpose
                 const style = suggestion.active
-                  ? { backgroundColor: 'green', cursor: 'pointer', width: '60%' }
-                  : { backgroundColor: 'blue', cursor: 'pointer', width: '60%' };
+                  ? { backgroundColor: 'green', cursor: 'pointer' }
+                  : { backgroundColor: 'blue', cursor: 'pointer'};
                 return (
                   <div
 

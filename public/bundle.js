@@ -51825,6 +51825,7 @@ function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
+      console.log('!!!!!', this.state.suggestedAddress);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_places_autocomplete__WEBPACK_IMPORTED_MODULE_1___default.a, {
         value: this.state.suggestedAddress ? this.state.suggestedAddress : this.state.address,
         onChange: this.handleChange,
@@ -51852,12 +51853,10 @@ function (_React$Component) {
 
           var style = suggestion.active ? {
             backgroundColor: 'green',
-            cursor: 'pointer',
-            width: '60%'
+            cursor: 'pointer'
           } : {
             backgroundColor: 'blue',
-            cursor: 'pointer',
-            width: '60%'
+            cursor: 'pointer'
           };
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", getSuggestionItemProps(suggestion, {
             className: className,
@@ -51969,12 +51968,17 @@ __webpack_require__.r(__webpack_exports__);
 var Forecast = function Forecast(props) {
   var cityInfo = props.cityInfo,
       forecast = props.forecast,
-      unit = props.unit;
+      unit = props.unit,
+      address = props.address;
   var currentTemp = forecast.length ? forecast[0].main.temp : null;
   var forecastByDay = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["aggregateForecast"])(forecast, cityInfo.timezoneName);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, forecastByDay.length ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "forecast-header-container"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, cityInfo.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Current temperature: ", forecast[0].main.temp, "\xB0 ", unit === 'metric' ? 'celcius' : 'farenheit')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+    className: "forecast-header"
+  }, cityInfo.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    className: "forecast-header"
+  }, "Current temperature: ", forecast[0].main.temp, "\xB0 ", unit === 'metric' ? 'celcius' : 'farenheit')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "table-container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Day"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "High / Low"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Wind"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Humidity")), forecastByDay.map(function (forecast) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast_table_item__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -52121,7 +52125,7 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(SearchLocation).call(this, props));
     _this.state = {
-      address: '',
+      suggestedAddress: '',
       inputEmpty: true,
       latLng: {},
       cityInfo: {},
@@ -52150,7 +52154,6 @@ function (_Component) {
     value: function handleSelect(address) {
       var _this2 = this;
 
-      console.log('address', address);
       Object(react_places_autocomplete__WEBPACK_IMPORTED_MODULE_5__["geocodeByAddress"])(address).then(function (results) {
         return Object(react_places_autocomplete__WEBPACK_IMPORTED_MODULE_5__["getLatLng"])(results[0]);
       }).then(function (latLng) {
@@ -52223,17 +52226,18 @@ function (_Component) {
           error = _this$state.error,
           loading = _this$state.loading,
           inputEmpty = _this$state.inputEmpty,
-          address = _this$state.address;
+          suggestedAddress = _this$state.suggestedAddress;
+      console.log('address....', suggestedAddress);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "main-container"
       }, forecast.length ? null : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_welcome_message__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form__WEBPACK_IMPORTED_MODULE_3__["default"], {
         handleSubmit: this.handleSubmit,
         handleSelect: this.handleSelect,
-        inputEmpty: inputEmpty,
-        address: address
+        inputEmpty: inputEmpty
       }), error && !loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "error"
       }, "Error: please make sure city exists") : null, loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Loading weather forecast...") : !error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forecast__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        address: suggestedAddress,
         cityInfo: cityInfo,
         forecast: forecast,
         unit: unit
@@ -52264,7 +52268,9 @@ __webpack_require__.r(__webpack_exports__);
 var Welcome = function Welcome() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "welcome-container"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Enter your city for the real-time weather forecast!"));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    className: "welcome"
+  }, "Check the real-time weather forecast anywhere in the world!"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Welcome);
