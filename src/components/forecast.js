@@ -4,7 +4,7 @@ import { aggregateForecast } from '../utils';
 import ForecastTableItem from './forecast-table-item';
 
 const Forecast = (props) => {
-  const { cityInfo, forecast, unit } = props;
+  const { cityInfo, forecast, unit, selectedAddress } = props;
   const currentTemp = forecast.length ? forecast[0].main.temp : null;
   const forecastByDay = aggregateForecast(forecast, cityInfo.timezoneName);
 
@@ -14,8 +14,8 @@ const Forecast = (props) => {
         forecastByDay.length ?
         <div>
           <div className='forecast-header-container'>
-            <h2>{cityInfo.name}</h2>
-            <h3>Current temperature: {forecast[0].main.temp}&#176; {unit === 'metric' ? 'celcius' : 'farenheit'}</h3>
+            <h2 className='forecast-header'>{selectedAddress}</h2>
+            <h3 className='forecast-header'>Current temperature: {forecast[0].main.temp}&#176; {unit === 'metric' ? 'celcius' : 'farenheit'}</h3>
           </div>
           <div className='table-container'>
             <table>

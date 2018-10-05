@@ -2,16 +2,16 @@ import React from 'react';
 import LocationSearchInput from './auto-complete';
 
 const Form = (props) => {
-  const { handleSubmit, inputEmpty, handleSelect, address} = props;
+  const { handleSubmit, inputEmpty, handleSelect, selectedAddress} = props;
   return (
     <form onSubmit={handleSubmit}>
       <div className='form-input-container'>
         <LocationSearchInput
           handleSelect={handleSelect}
-          address={address}
+          selectedAddress={selectedAddress}
         />
 
-        <div className='styled-select blue semi-square'>
+        <div className='styled-select'>
           <select name='unit'>
             <option value='farenheit'>&#176;F</option>
             <option value='celcius'>&#176;C</option>
