@@ -51885,7 +51885,10 @@ var Footer = function Footer() {
     className: "footer-container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "footer"
-  }, "Made by Yoni Slotwiner"));
+  }, "Made by ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "http://yonislotwiner.com",
+    target: "_blank"
+  }, "Yoni Slotwiner")));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Footer);
@@ -52052,7 +52055,10 @@ var Header = function Header() {
     className: "header-container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
     className: "header"
-  }, "5-Day Weather Forecast"));
+  }, "5-Day Weather Forecast"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    className: "header-img",
+    src: "https://cdn1.iconfinder.com/data/icons/weather-forecast-meteorology-color-1/128/weather-sunny-512.png"
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Header);
