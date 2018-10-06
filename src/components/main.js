@@ -49,10 +49,10 @@ export default class Main extends Component {
 
   getWeatherData(weather_api, weather_api_key, timezonedb_api, latLng, unit) {
     let forecastData;
-    axios.get(`${weather_api}/forecast?units=${unit}&lat=${latLng.lat}&lon=${latLng.lng}&APPID=${weather_api_key}`)
+    axios.get(`https://api.openweathermap.org/data/2.5/forecast?units=${unit}&lat=${latLng.lat}&lon=${latLng.lng}&APPID=${weather_api_key}`)
     .then(res => {
       forecastData = res.data;
-      return axios.get(`${timezonedb_api}by=position&lat=${latLng.lat}&lng=${latLng.lng}`)
+      return axios.get(`https://api.timezonedb.com/v2.1/get-time-zone?key=TTUJNWPVX4K6&format=json&by=position&lat=${latLng.lat}&lng=${latLng.lng}`)
     .then(timezoneData => {
       forecastData.city.timezoneName = timezoneData.data.zoneName;
       this.setState({
