@@ -6,19 +6,22 @@ function aggregateForecast (cityForecast, timezone) {
   let currentDate;
   for(let i = 0; i < cityForecast.length; i++) {
     const currentElement = cityForecast[i];
-    const currentElementMain = cityForecast[i].main;
     const convertedDate = convertTimeZone(currentElement.dt_txt, timezone);
     if(i > 0) {
         prevDate = convertTimeZone(cityForecast[i-1].dt_txt, timezone);
       }
     if(i === 0 || convertedDate !== prevDate) {
       const forecast = setInitialForecast(convertedDate, currentElement);
-      aggregatedbyDay.push(forecast)
+      aggregatedbyDay.push(forecast);
     }
     let aggregatedElement = aggregatedbyDay[aggregatedbyDay.length-1];
     const currentTemp = currentElement.main.temp;
-    aggregatedElement.high = aggregatedElement.high ? Math.max(aggregatedElement.high, currentTemp) : currentTemp;
-    aggregatedElement.low = aggregatedElement.low ? Math.min(aggregatedElement.low, currentTemp) : currentTemp;
+    aggregatedElement.high = aggregatedElement.high
+      ? Math.max(aggregatedElement.high, currentTemp)
+      : currentTemp;
+    aggregatedElement.low = aggregatedElement.low
+      ? Math.min(aggregatedElement.low, currentTemp)
+      : currentTemp;
   }
   return aggregatedbyDay.slice(0, 5);
 }

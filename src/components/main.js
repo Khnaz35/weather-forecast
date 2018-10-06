@@ -20,6 +20,7 @@ export default class Main extends Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.getWeatherData = this.getWeatherData.bind(this);
   }
 
   handleSelect(selectedAddress, placeId) {
@@ -43,6 +44,10 @@ export default class Main extends Component {
     const { weather_api_key, weather_api, timezonedb_api } = this.props;
     const unit = event.target.unit.value === 'celcius' ? 'metric' : 'imperial';
     const {latLng} = this.state;
+    this.getWeatherData(weather_api, weather_api_key, timezonedb_api, latLng, unit);
+  }
+
+  getWeatherData(weather_api, weather_api_key, timezonedb_api, latLng, unit) {
     let forecastData;
     axios.get(`${weather_api}/forecast?units=${unit}&lat=${latLng.lat}&lon=${latLng.lng}&APPID=${weather_api_key}`)
     .then(res => {
@@ -50,7 +55,13 @@ export default class Main extends Component {
       return axios.get(`${timezonedb_api}by=position&lat=${latLng.lat}&lng=${latLng.lng}`)
     .then(timezoneData => {
       forecastData.city.timezoneName = timezoneData.data.zoneName;
-      this.setState({cityInfo: forecastData.city, forecast: forecastData.list, unit: unit, loading: false, error: false, inputEmpty: true});
+      this.setState({
+        cityInfo: forecastData.city,
+        forecast: forecastData.list,
+        unit: unit,
+        loading: false,
+        error: false,
+        inputEmpty: true});
       })
     })
     .catch(() => {
@@ -94,6 +105,3 @@ export default class Main extends Component {
     )
   }
 }
-
-
-

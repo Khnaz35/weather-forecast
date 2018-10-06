@@ -107,13 +107,11 @@ h3.forecast-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /*text-align: center;*/
   align-items: center;
 }
 
 .header-img {
   height: 60px;
-  /*vertical-align: */
   padding: 2%;
 }
 
@@ -160,6 +158,11 @@ input[type=text] {
   cursor: pointer;
   background-color: #c1bbbb;
   color: #012b3d;
+  border-bottom: 1px solid #ddd;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
 }
 
 .suggestion-item--active {
