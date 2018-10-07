@@ -31,10 +31,13 @@ https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places
 
 ## Improvements
 
-- clicking on day gives more info
-- different types of forecast (10-day, one day with more details, etc)
-- writing more tests
-- using redux (had to pass props down multiple levels to children)
+The following are bug fixes and potential feature additions and architecture changes to implement in future updates:
+
+- Currently, once the forecast is fetched and displayed on screen, selecting a new location will change the visible location above the forecast table, yet will not fetch the new weather data until the 'get forecast' button is clicked.
+- [feature] The app can be exanded to support more than just the 5-hour forecast (hourly, daily, 10-day, etc).
+- [feature] Clicking on a specific date in the forecast table should expand the row and give more weather details about that day.
+- [architecture] Implementing redux to manage state. While the app is small and managable, there are still several components passing props to their children, in some cases multiple levels deep. Using redux will allow for better state management and more seamless access of data for components.
+
 
 
 
