@@ -6,7 +6,7 @@ This app provides a 5-day weather forecast for anywhere in the world using the O
 
 I decided to use React.js to build this app. While it is possible to use vanilla JavaScript, which I considered at first, as well as other frameworks, React provides a powerful way to modularize code and create seamless single-page applications that easily manipulate the DOM.
 
-Note that I did not use a starter kit, such as create-react-app, because I wanted to know exactly what is in my codebase and not have any unnecessary code that I am not using.
+Note that I did not use a starter kit, such as create-react-app, because I wanted to know exactly what is in my codebase and avoid unnecessary code.
 
 Besides using the OpenWeatherMap API, the app takes advantage of a library called react-places-autocomplete which uses Google Maps Places Autocomplete, serving real-time suggestions to the user when searching for a location.
 - note, the component 'auto-complete.js' is mostly taken from the react-places-autocomplete example for how to use the library; that said, I did have to make several changes to properly integrate it into my app.
