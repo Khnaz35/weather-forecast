@@ -17,7 +17,7 @@ export default class LocationSearchInput extends React.Component {
       this.setState({
         isUpdated: true,
         input: this.props.selectedAddress
-      })
+      });
     }
   }
 
