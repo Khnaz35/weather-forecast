@@ -16,7 +16,8 @@ export default class Main extends Component {
       forecast: [],
       unit: '',
       loading: false,
-      error: false
+      error: false,
+      timezonedbError: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
@@ -53,8 +54,13 @@ export default class Main extends Component {
     .then(res => {
       forecastData = res.data;
       return axios.get(`https://api.timezonedb.com/v2.1/get-time-zone?key=TTUJNWPVX4K6&format=json&by=position&lat=${latLng.lat}&lng=${latLng.lng}`)
+        .catch(() => {
+          this.setState({timezonedbError: true})
+        })
     .then(timezoneData => {
-      forecastData.city.timezoneName = timezoneData.data.zoneName;
+      if(timezoneData) {
+        forecastData.city.timezoneName = timezoneData.data.zoneName;
+      }
       this.setState({
         cityInfo: forecastData.city,
         forecast: forecastData.list,
@@ -65,7 +71,9 @@ export default class Main extends Component {
       })
     })
     .catch(() => {
-      this.setState({error: true, loading: false, inputEmpty: true})
+      if(!this.state.timezonedbError) {
+        this.setState({error: true, loading: false, inputEmpty: true})
+      }
     });
   }
 
